@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SuperMarket.Infrastructure.Application
+namespace SuperMarket.Persistence.EF.Products
 {
-     public interface UnitOfWork
+    internal class EFProductRepository
     {
-        void Commit();
     }
 }

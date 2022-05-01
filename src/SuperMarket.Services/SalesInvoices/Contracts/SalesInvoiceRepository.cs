@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SuperMarket.Infrastructure.Application
+namespace SuperMarket.Services.SalesInvoices.Contracts
 {
-     public interface UnitOfWork
+    internal class SalesInvoiceRepository
     {
-        void Commit();
     }
 }

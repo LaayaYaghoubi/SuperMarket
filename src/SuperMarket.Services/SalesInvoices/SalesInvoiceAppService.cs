@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SuperMarket.Infrastructure.Application
+namespace SuperMarket.Services.SalesInvoices
 {
-     public interface UnitOfWork
+    public class SalesInvoiceAppService
     {
-        void Commit();
     }
 }
