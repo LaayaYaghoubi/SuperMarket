@@ -13,19 +13,24 @@ namespace SuperMarket.Migrations
         public override void Up()
         {
             CreateProductsTable();
-
             CreateCategoriesTable();
-
             CreatePurchaseVouchersTable();
-
             CreateSalesInvoicesTable();
 
         }
+        public override void Down()
+        {
+            Delete.Table("Products");
+            Delete.Table("Categories");
+            Delete.Table("PurchaseVouchers");
+            Delete.Table("SalesInvoices");
 
+        }
         private void CreateSalesInvoicesTable()
         {
             Create.Table("SalesInvoices")
-                .WithColumn("Id").AsInt32().PrimaryKey().NotNullable().Identity()
+                .WithColumn("Id").AsInt32().PrimaryKey().NotNullable()
+                .Identity()
                 .WithColumn("ClientName").AsString(50).NotNullable()
                 .WithColumn("Date").AsDateTime().NotNullable()
                 .WithColumn("TotalPrice").AsDecimal().NotNullable()
@@ -38,7 +43,8 @@ namespace SuperMarket.Migrations
         private void CreatePurchaseVouchersTable()
         {
             Create.Table("PurchaseVouchers")
-                .WithColumn("Id").AsInt32().PrimaryKey().NotNullable().Identity()
+                .WithColumn("Id").AsInt32().PrimaryKey().NotNullable()
+                .Identity()
                 .WithColumn("Name").AsString(50).NotNullable()
                 .WithColumn("TotalPrice").AsDecimal().NotNullable()
                 .WithColumn("ProductId").AsInt32().NotNullable()
@@ -49,14 +55,16 @@ namespace SuperMarket.Migrations
         private void CreateCategoriesTable()
         {
             Create.Table("Categories")
-                .WithColumn("Id").AsInt32().PrimaryKey().NotNullable().Identity()
+                .WithColumn("Id").AsInt32().PrimaryKey().NotNullable()
+                .Identity()
                 .WithColumn("Name").AsString(50).NotNullable();
         }
 
         private void CreateProductsTable()
         {
             Create.Table("Products")
-                .WithColumn("Id").AsInt32().PrimaryKey().NotNullable().Identity()
+                .WithColumn("Id").AsInt32().PrimaryKey().NotNullable()
+                .Identity()
                 .WithColumn("Name").AsString(50).NotNullable()
                 .WithColumn("Price").AsDecimal().NotNullable()
                 .WithColumn("Stock").AsInt32().Nullable()
@@ -66,13 +74,6 @@ namespace SuperMarket.Migrations
                 .WithColumn("CategoryId").AsInt32().NotNullable()
                 .ForeignKey("FK_Products_Categories", "Categories", "Id")
                             .OnDelete(System.Data.Rule.None);
-        }
-
-        public override void Down()
-        {
-            throw new NotImplementedException();
-        }
-
-      
+        }  
     }
 }
