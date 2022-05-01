@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SuperMarket.Entities
+namespace SuperMarket.Migrations
 {
-    public class Category
+    internal class _202201050858_InitialDataBase
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-
     }
 }

@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace SuperMarket.Entities
 {
-    internal class PurchaseVoucher
+    public class PurchaseVoucher
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public Product Product { get; set;}
+        public int ProductId { get; set; }
+        public decimal TotalPrice { get; set; }  
+
     }
 }
