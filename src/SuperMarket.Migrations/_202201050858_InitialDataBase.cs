@@ -16,6 +16,7 @@ namespace SuperMarket.Migrations
             CreateProductsTable();
             CreateSalesInvoicesTable();
             CreatePurchaseVouchersTable();
+            
 
         }   
         public override void Down()
@@ -62,9 +63,12 @@ namespace SuperMarket.Migrations
               .WithColumn("MaximumStock").AsInt32().NotNullable()
               .WithColumn("ExpirationDate").AsDateTime().Nullable()
               .WithColumn("CategoryId").AsInt32().NotNullable()
+              .WithColumn("PurchaseVoucherId").AsInt32().NotNullable()
+              .WithColumn(" SalesInvoiceId").AsInt32().NotNullable()
               .ForeignKey("FK_Products_Categories", "Categories", "Id")
                  .OnDelete(System.Data.Rule.None);
         }
+
         private void CreateCategoriesTable()
         {
             Create.Table("Categories")

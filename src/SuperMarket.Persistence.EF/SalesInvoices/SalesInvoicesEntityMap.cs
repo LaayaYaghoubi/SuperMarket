@@ -29,6 +29,10 @@ namespace SuperMarket.Persistence.EF.SalesInvoices
             builder.Property(_ => _.TotalPrice)
                 .IsRequired();
 
+            builder.HasMany(_ => _.Product)
+               .WithOne(_ => _.SalesInvoice)
+               .HasForeignKey(_ => _.SalesInvoiceId)
+               .OnDelete(DeleteBehavior.ClientNoAction);
 
         }
     }

@@ -26,11 +26,11 @@ namespace SuperMarket.Persistence.EF.PurchaseVouchers
                 .IsRequired();
 
             builder.HasMany(_ => _.Product)
-                .WithOne(_ => _.PurchaseVoucher)
-                .HasForeignKey(_ => _.PurchaseVoucherId);
+               .WithOne(_ => _.PurchaseVoucher)
+               .HasForeignKey(_ => _.PurchaseVoucherId)
+               .OnDelete(DeleteBehavior.ClientNoAction);
 
 
-            
         }
     }
 }

@@ -16,7 +16,8 @@ namespace SuperMarket.Persistence.EF.Categories
             builder.ToTable("Categories");
 
             builder.HasKey(_ => _.Id);
-            builder.Property(_ => _.Id).ValueGeneratedOnAdd();
+            builder.Property(_ => _.Id).ValueGeneratedOnAdd().
+                IsRequired();
 
             builder.Property(_ => _.Name).IsRequired();
 
