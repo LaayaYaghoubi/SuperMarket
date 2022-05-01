@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMarket.Infrastructure"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMarket.Persistence.EF", "SuperMarket.Persistence.EF\SuperMarket.Persistence.EF.csproj", "{8E367600-B11F-4D90-B871-1AAFB3E71A8F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMarket.RestAPI", "SuperMarket.RestAPI\SuperMarket.RestAPI.csproj", "{3E1C9F1E-70FA-41E6-900A-D9C6D56C67C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{8E367600-B11F-4D90-B871-1AAFB3E71A8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E367600-B11F-4D90-B871-1AAFB3E71A8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E367600-B11F-4D90-B871-1AAFB3E71A8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E1C9F1E-70FA-41E6-900A-D9C6D56C67C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E1C9F1E-70FA-41E6-900A-D9C6D56C67C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E1C9F1E-70FA-41E6-900A-D9C6D56C67C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E1C9F1E-70FA-41E6-900A-D9C6D56C67C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

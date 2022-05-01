@@ -17,6 +17,10 @@ namespace SuperMarket.Entities
         public DateTime ExpirationDate { get; set; }
         public Category Category { get; set; }
         public int CategoryId { get; set; }
+        public PurchaseVoucher PurchaseVoucher { get; set; }
+        public int PurchaseVoucherId { get; set; }
+        public SalesInvoice SalesInvoice { get; set; }
+        public int SalesInvoiceId { get; set; }
 
     }
 }

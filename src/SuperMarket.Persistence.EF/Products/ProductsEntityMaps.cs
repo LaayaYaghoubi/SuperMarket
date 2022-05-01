@@ -1,5 +1,4 @@
-﻿
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SuperMarket.Entities;
 using System;
@@ -8,13 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookStore.Persistence.EF.Categories
+namespace SuperMarket.Persistence.EF.Products
 {
-    public class BooksEntityMap : IEntityTypeConfiguration<Category>
+    public class ProductEntityMaps : IEntityTypeConfiguration<Product>
     {
-        public void Configure(EntityTypeBuilder<Category> builder)
+        public void Configure(EntityTypeBuilder<Product> builder)
         {
-           
+        
         }
     }
 }
