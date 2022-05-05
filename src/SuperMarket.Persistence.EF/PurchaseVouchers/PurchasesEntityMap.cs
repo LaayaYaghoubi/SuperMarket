@@ -25,9 +25,9 @@ namespace SuperMarket.Persistence.EF.PurchaseVouchers
             builder.Property(_ => _.ProductId)
                 .IsRequired();
 
-            builder.HasMany(_ => _.Product)
+            builder.HasOne(_ => _.Product)
                .WithOne(_ => _.PurchaseVoucher)
-               .HasForeignKey(_ => _.PurchaseVoucherId)
+               .HasForeignKey<PurchaseVoucher>(_ => _.ProductId)
                .OnDelete(DeleteBehavior.ClientNoAction);
 
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SuperMarket.Services.PurchaseVoucher.Contracts
 {
-    public interface PurchaseVoucherRepository
+    public interface PurchaseVoucherService
     {
     }
 }

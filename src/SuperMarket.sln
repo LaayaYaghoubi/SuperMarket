@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C29A50BD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMarket.Services", "SuperMarket.Services\SuperMarket.Services.csproj", "{BB6E549B-CEEF-460C-A0A6-E1D838B14F5E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMarket.Tests.Tools", "SuperMarket.Tests.Tools\SuperMarket.Tests.Tools.csproj", "{7F41D2F4-6E96-40D3-99B2-12E60F2C7A45}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{BB6E549B-CEEF-460C-A0A6-E1D838B14F5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB6E549B-CEEF-460C-A0A6-E1D838B14F5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB6E549B-CEEF-460C-A0A6-E1D838B14F5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F41D2F4-6E96-40D3-99B2-12E60F2C7A45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F41D2F4-6E96-40D3-99B2-12E60F2C7A45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F41D2F4-6E96-40D3-99B2-12E60F2C7A45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F41D2F4-6E96-40D3-99B2-12E60F2C7A45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +66,7 @@ Global
 		{8E367600-B11F-4D90-B871-1AAFB3E71A8F} = {8EEF4DD2-E0DF-4688-AE8F-C072E20C57C6}
 		{3E1C9F1E-70FA-41E6-900A-D9C6D56C67C0} = {8EEF4DD2-E0DF-4688-AE8F-C072E20C57C6}
 		{BB6E549B-CEEF-460C-A0A6-E1D838B14F5E} = {8EEF4DD2-E0DF-4688-AE8F-C072E20C57C6}
+		{7F41D2F4-6E96-40D3-99B2-12E60F2C7A45} = {C29A50BD-569E-44C8-B0D2-6F937CC859DA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0F8BD9B3-1EE3-45BE-AF27-2391CD08C44C}

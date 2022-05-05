@@ -34,6 +34,7 @@ namespace SuperMarket.Migrations
             .Identity()
             .WithColumn("Name").AsString(50).NotNullable()
             .WithColumn("TotalPrice").AsDecimal().NotNullable()
+            .WithColumn("NumberOfProducts").AsInt32().NotNullable()
             .WithColumn("ProductId").AsInt32().NotNullable()
             .ForeignKey("FK_PurchaseVouchers_Products", "Products", "Id")
                      .OnDelete(System.Data.Rule.None);
@@ -46,7 +47,6 @@ namespace SuperMarket.Migrations
               .WithColumn("ClientName").AsString(50).NotNullable()
               .WithColumn("Date").AsDateTime().NotNullable()
               .WithColumn("TotalPrice").AsDecimal().NotNullable()
-              .WithColumn("NumberOfProducts").AsInt32().NotNullable()
               .WithColumn("ProductId").AsInt32().NotNullable()
               .ForeignKey("FK_SalesInvoices_Products", "Products", "Id")
                           .OnDelete(System.Data.Rule.None);
@@ -55,7 +55,6 @@ namespace SuperMarket.Migrations
         {
             Create.Table("Products")
               .WithColumn("Id").AsInt32().PrimaryKey().NotNullable()
-              .Identity()
               .WithColumn("Name").AsString(50).NotNullable()
               .WithColumn("Price").AsDecimal().NotNullable()
               .WithColumn("Stock").AsInt32().Nullable()
@@ -63,8 +62,8 @@ namespace SuperMarket.Migrations
               .WithColumn("MaximumStock").AsInt32().NotNullable()
               .WithColumn("ExpirationDate").AsDateTime().Nullable()
               .WithColumn("CategoryId").AsInt32().NotNullable()
-              .WithColumn("PurchaseVoucherId").AsInt32().NotNullable()
-              .WithColumn(" SalesInvoiceId").AsInt32().NotNullable()
+              .WithColumn("PurchaseVoucherId").AsInt32().Nullable()
+              .WithColumn(" SalesInvoiceId").AsInt32().Nullable()
               .ForeignKey("FK_Products_Categories", "Categories", "Id")
                  .OnDelete(System.Data.Rule.None);
         }

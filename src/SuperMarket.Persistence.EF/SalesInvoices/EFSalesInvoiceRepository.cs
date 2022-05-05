@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SuperMarket.Persistence.EF.SalesInvoices
 {
-    internal class EFSalesInvoiceRepository
+    public class EFSalesInvoiceRepository
     {
     }
 }

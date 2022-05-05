@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SuperMarket.Services.Categories.Contracts
 {
-    internal class CategoryService
+    public interface ProductService
     {
     }
 }

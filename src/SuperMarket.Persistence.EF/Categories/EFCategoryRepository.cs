@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SuperMarket.Persistence.EF.Categories
 {
-    internal class EFCategoryRepository
+    public class EFCategoryRepository
     {
     }
 }

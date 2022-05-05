@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SuperMarket.Services.Categories
 {
-    internal class CategoryAppService
+    public class CategoryAppService
     {
     }
 }

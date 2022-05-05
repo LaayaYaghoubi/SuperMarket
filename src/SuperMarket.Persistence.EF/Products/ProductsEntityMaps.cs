@@ -16,9 +16,7 @@ namespace SuperMarket.Persistence.EF.Products
             builder.ToTable("Products");
             builder.HasKey(_ => _.Id);
             builder.Property(_ => _.Id)
-                .ValueGeneratedOnAdd()
                 .IsRequired();
-
             builder.Property(_ => _.Name)
                 .IsRequired();
             builder.Property(_ => _.Price)
@@ -29,12 +27,6 @@ namespace SuperMarket.Persistence.EF.Products
                 IsRequired();
             builder.Property(_ => _.CategoryId)
                 .IsRequired();
-
-          
-
-
-
-
         }
     }
 }

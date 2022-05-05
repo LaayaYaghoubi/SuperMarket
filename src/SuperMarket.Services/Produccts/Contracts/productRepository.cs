@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SuperMarket.Services.Categories.Contracts
+namespace SuperMarket.Services.Products.Contracts
 {
-    internal class PurchaseVoucherRepository
+    public interface ProductRepository
     {
     }
 }

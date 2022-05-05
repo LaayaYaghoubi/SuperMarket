@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SuperMarket.Services.SalesInvoices.Contracts
 {
-    internal class SalesInvoiceRepository
+    public interface SalesInvoiceRepository
     {
     }
 }

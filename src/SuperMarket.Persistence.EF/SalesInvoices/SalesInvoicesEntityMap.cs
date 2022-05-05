@@ -20,8 +20,6 @@ namespace SuperMarket.Persistence.EF.SalesInvoices
                 .IsRequired();
             builder.Property(_ => _.ClientName)
                 .IsRequired();
-            builder.Property(_ => _.NumberOfProducts)
-                .IsRequired();
             builder.Property(_ => _.ProductId)
                 .IsRequired();
             builder.Property(_ => _.Date)
@@ -29,10 +27,10 @@ namespace SuperMarket.Persistence.EF.SalesInvoices
             builder.Property(_ => _.TotalPrice)
                 .IsRequired();
 
-            builder.HasMany(_ => _.Product)
-               .WithOne(_ => _.SalesInvoice)
-               .HasForeignKey(_ => _.SalesInvoiceId)
-               .OnDelete(DeleteBehavior.ClientNoAction);
+            builder.HasOne(_ => _.Product)
+              .WithOne(_ => _.SalesInvoice)
+              .HasForeignKey<SalesInvoice>(_ => _.ProductId)
+              .OnDelete(DeleteBehavior.ClientNoAction);
 
         }
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SuperMarket.Persistence.EF.PurchaseVouchers
 {
-    internal class EFPurchaseVoucherRepository
+    public class EFPurchaseVoucherRepository
     {
     }
 }
