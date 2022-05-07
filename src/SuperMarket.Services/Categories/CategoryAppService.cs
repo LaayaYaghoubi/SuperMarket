@@ -45,7 +45,11 @@ namespace SuperMarket.Services.Categories
         public void Update(int id, UpdateCategoryDto dto)
         {
             Category category = _repository.FindById(id);
-
+            bool isNameDuplicate = _repository.IsExistCategoryName(dto.Name);
+            if (isNameDuplicate)
+            {
+                throw new DuplicateCategoryNameException();
+            }
             category.Name = dto.Name;
             _repository.Update(category);
             _unitOfWork.Commit();
