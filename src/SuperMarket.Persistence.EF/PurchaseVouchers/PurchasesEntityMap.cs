@@ -29,8 +29,6 @@ namespace SuperMarket.Persistence.EF.PurchaseVouchers
                .WithOne(_ => _.PurchaseVoucher)
                .HasForeignKey<PurchaseVoucher>(_ => _.ProductId)
                .OnDelete(DeleteBehavior.ClientNoAction);
-
-
         }
     }
 }

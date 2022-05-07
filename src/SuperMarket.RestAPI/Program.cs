@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BookStore.RestAPI
+namespace SuperMarket.RestAPI
 {
     public class Program
     {

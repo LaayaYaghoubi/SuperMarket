@@ -59,13 +59,13 @@ namespace SuperMarket.Tests.Tools.Products
         }
         public ProductBuilder WithPurchaseVoucher(string name, int productId, decimal totalPrice)
         {
-            product.PurchaseVoucher = new PurchaseVoucher
-            {
-              Name = name,
-              ProductId = productId,    
-              TotalPrice = totalPrice,
+            //product.PurchaseVoucher = new PurchaseVoucher
+            //{
+            //  Name = name,
+            //  ProductId = productId,    
+            //  TotalPrice = totalPrice,
 
-            };
+            //};
             return this;
             
         }

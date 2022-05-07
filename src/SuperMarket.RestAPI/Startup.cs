@@ -1,12 +1,17 @@
 using Autofac;
+using BookStore.Persistence.EF;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using SuperMarket.Infrastructure.Application;
+using SuperMarket.Persistence.EF;
+using SuperMarket.Persistence.EF.Categories;
+using SuperMarket.Services.Categories;
 
-namespace BookStore.RestAPI
+namespace SuperMarket.RestAPI
 {
     public class Startup
     {
@@ -23,32 +28,32 @@ namespace BookStore.RestAPI
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "sUPERmARKET.RestAPI", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "SuperMarket.RestAPI", Version = "v1" });
             });
         }
 
 
-        //public void ConfigureContainer(ContainerBuilder builder)
-        //{
-        //    builder.RegisterType<EFDataContext>()
-        //        .WithParameter("connectionString", Configuration["ConnectionString"])
-        //         .AsSelf()
-        //         .InstancePerLifetimeScope();
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterType<EFDataContext>()
+                .WithParameter("connectionString", Configuration["ConnectionString"])
+                 .AsSelf()
+                 .InstancePerLifetimeScope();
 
-        //    builder.RegisterAssemblyTypes(typeof(EFCategoryRepository).Assembly)
-        //              .AssignableTo<Repository>()
-        //              .AsImplementedInterfaces()
-        //              .InstancePerLifetimeScope();
+            builder.RegisterAssemblyTypes(typeof(EFCategoryRepository).Assembly)
+                      .AssignableTo<Repository>()
+                      .AsImplementedInterfaces()
+                      .InstancePerLifetimeScope();
 
-        //    builder.RegisterAssemblyTypes(typeof(CategoryAppService).Assembly)
-        //              .AssignableTo<Service>()
-        //              .AsImplementedInterfaces()
-        //              .InstancePerLifetimeScope();
+            builder.RegisterAssemblyTypes(typeof(CategoryAppService).Assembly)
+                      .AssignableTo<Service>()
+                      .AsImplementedInterfaces()
+                      .InstancePerLifetimeScope();
 
-        //    builder.RegisterType<EFUnitOfWork>()
-        //        .As<UnitOfWork>()
-        //        .InstancePerLifetimeScope();
-        //}
+            builder.RegisterType<EFUnitOfWork>()
+                .As<UnitOfWork>()
+                .InstancePerLifetimeScope();
+        }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
