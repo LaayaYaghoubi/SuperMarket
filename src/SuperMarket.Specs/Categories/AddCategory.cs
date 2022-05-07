@@ -17,7 +17,7 @@ namespace SuperMarket.Specs.Categories
     [Feature("",
      AsA = "فروشنده ",
      IWantTo = " دسته بندی کالاها را مدیریت  کنم  ",
-     InOrderTo = "دسته بندی های کالا را مدیریت کنم"
+     InOrderTo = "دسته بندی های کالا را تعریف کنم"
    )]
     public class AddCategory : EFDataContextDatabaseFixture
     {

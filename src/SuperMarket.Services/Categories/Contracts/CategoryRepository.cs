@@ -12,5 +12,7 @@ namespace SuperMarket.Services.Categories.Contracts
     {
         void Add(Category category);
         bool IsExistCategoryName(string name);
+        Category FindById(int id);
+        void Update(Category category);
     }
 }

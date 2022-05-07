@@ -21,9 +21,19 @@ namespace SuperMarket.Persistence.EF.Categories
             _dataContext.Categories.Add(category);
         }
 
+        public Category FindById(int id)
+        {
+            return _dataContext.Categories.Find(id);
+        }
+
         public bool IsExistCategoryName(string name)
         {
            return _dataContext.Categories.Any(_ => _.Name == name);  
+        }
+
+        public void Update(Category category)
+        {
+            _dataContext.Update(category);
         }
     }
 }
