@@ -13,5 +13,6 @@ namespace SuperMarket.Services.Products.Contracts
     {
         void Add(Product product);
         bool IsExistProductId(int id);
+        Product FindById(int id);
     }
 }

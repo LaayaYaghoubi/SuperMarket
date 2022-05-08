@@ -43,5 +43,18 @@ namespace SuperMarket.Services.Produccts
             _repository.Add(product);
             _unitOfWork.Commit();
         }
+
+        public void Update(int id, UpdateProductDto dto)
+        {
+            var product = _repository.FindById(id);
+
+            product.Id = dto.Id;
+            product.MaximumStock = dto.MaximumStock;    
+            product.MinimumStock = dto.MinimumStock;
+            product.Name = dto.Name;
+            product.Price = dto.Price;
+            product.CategoryId = dto.CategoryId;    
+            
+        }
     }
 }
