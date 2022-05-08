@@ -73,7 +73,7 @@ namespace BookStore.Migrations
                 .Build();
 
             var settings = new MigrationSettings();
-            settings.ConnectionString = configurations.GetValue<string>("ConnectionString");
+            settings.ConnectionString = configurations.GetValue<string>("DbConnectionString");
             return settings;
         }
     }

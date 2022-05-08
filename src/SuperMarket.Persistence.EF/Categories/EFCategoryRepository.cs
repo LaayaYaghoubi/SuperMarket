@@ -40,6 +40,13 @@ namespace SuperMarket.Persistence.EF.Categories
                       Name = _.Name
                   }).ToList();
         }
+
+        public bool IsCategoryWithProduct(int id)
+        {
+            return _dataContext.Categories.Any(_ => _.Id == id && _.products.Count> 0);
+            
+        }
+
         public bool IsExistCategoryName(string name)
         {
             return _dataContext.Categories.Any(_ => _.Name == name);

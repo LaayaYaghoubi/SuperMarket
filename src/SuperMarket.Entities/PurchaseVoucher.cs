@@ -14,5 +14,6 @@ namespace SuperMarket.Entities
         public int ProductId { get; set; }
         public decimal TotalPrice { get; set; }
         public int NumberOfProducts { get; set; }
+        public DateTime DateOfPurchase { get; set; }
     }
 }

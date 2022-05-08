@@ -3,25 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMarket.Entities", "SuperMarket.Entities\SuperMarket.Entities.csproj", "{C0A4382B-9CF8-442D-9DCD-7095A9249A27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperMarket.Entities", "SuperMarket.Entities\SuperMarket.Entities.csproj", "{C0A4382B-9CF8-442D-9DCD-7095A9249A27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMarket.Migrations", "SuperMarket.Migrations\SuperMarket.Migrations.csproj", "{23983968-AE22-471E-90CD-906413AA48BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperMarket.Migrations", "SuperMarket.Migrations\SuperMarket.Migrations.csproj", "{23983968-AE22-471E-90CD-906413AA48BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMarket.Infrastructure", "SuperMarket.Infrastructure\SuperMarket.Infrastructure.csproj", "{CA3FCD99-138C-448C-AA7F-8E171D22F116}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperMarket.Infrastructure", "SuperMarket.Infrastructure\SuperMarket.Infrastructure.csproj", "{CA3FCD99-138C-448C-AA7F-8E171D22F116}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMarket.Persistence.EF", "SuperMarket.Persistence.EF\SuperMarket.Persistence.EF.csproj", "{8E367600-B11F-4D90-B871-1AAFB3E71A8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperMarket.Persistence.EF", "SuperMarket.Persistence.EF\SuperMarket.Persistence.EF.csproj", "{8E367600-B11F-4D90-B871-1AAFB3E71A8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMarket.RestAPI", "SuperMarket.RestAPI\SuperMarket.RestAPI.csproj", "{3E1C9F1E-70FA-41E6-900A-D9C6D56C67C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperMarket.RestAPI", "SuperMarket.RestAPI\SuperMarket.RestAPI.csproj", "{3E1C9F1E-70FA-41E6-900A-D9C6D56C67C0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8EEF4DD2-E0DF-4688-AE8F-C072E20C57C6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C29A50BD-569E-44C8-B0D2-6F937CC859DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMarket.Services", "SuperMarket.Services\SuperMarket.Services.csproj", "{BB6E549B-CEEF-460C-A0A6-E1D838B14F5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperMarket.Services", "SuperMarket.Services\SuperMarket.Services.csproj", "{BB6E549B-CEEF-460C-A0A6-E1D838B14F5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMarket.Tests.Tools", "SuperMarket.Tests.Tools\SuperMarket.Tests.Tools.csproj", "{7F41D2F4-6E96-40D3-99B2-12E60F2C7A45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperMarket.Tests.Tools", "SuperMarket.Tests.Tools\SuperMarket.Tests.Tools.csproj", "{7F41D2F4-6E96-40D3-99B2-12E60F2C7A45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMarket.Specs", "SuperMarket.Specs\SuperMarket.Specs.csproj", "{2DD4D0D1-50DD-4537-88E5-6297D58126B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperMarket.Specs", "SuperMarket.Specs\SuperMarket.Specs.csproj", "{2DD4D0D1-50DD-4537-88E5-6297D58126B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
