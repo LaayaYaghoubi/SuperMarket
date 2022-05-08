@@ -8,6 +8,7 @@ using SuperMarket.Persistence.EF;
 using SuperMarket.Persistence.EF.Products;
 using SuperMarket.Services.Produccts;
 using SuperMarket.Services.Produccts.Contracts;
+using SuperMarket.Services.Produccts.Exceptions;
 using SuperMarket.Services.Products.Contracts;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace SuperMarket.Specs.Products
        IWantTo = " کالاها را مدیریت  کنم  ",
        InOrderTo = " کالاها را ویرایش کنم"
      )]
-    public class UpdateProduct : EFDataContextDatabaseFixture
+    public class UpdateProductIdToDuplicateId : EFDataContextDatabaseFixture
     {
         private readonly EFDataContext _dataContext;
         private Category _category;
@@ -34,9 +35,9 @@ namespace SuperMarket.Specs.Products
         private UnitOfWork _unitOfWork;
         private ProductRepository _categoryRepository;
         private ProductService _sut;
+        private Action expected;
 
-
-        public UpdateProduct(ConfigurationFixture configuration) : base(configuration)
+        public UpdateProductIdToDuplicateId(ConfigurationFixture configuration) : base(configuration)
         {
             _dataContext = CreateDataContext();
             _unitOfWork = new EFUnitOfWork(_dataContext);
@@ -54,7 +55,7 @@ namespace SuperMarket.Specs.Products
 
             _dataContext.Manipulate(_ => _.Categories.Add(_category));
         }
-        [And("کالا با عنوان ‘شیرکاله’ " +
+        [And("کالا با عنوان ‘شیر’ " +
             "و قیمت ‘3500’ " +
             "و با دسته بندی ‘ لبنیات’ " +
             "و کد ‘101’ " +
@@ -75,64 +76,84 @@ namespace SuperMarket.Specs.Products
             };
             _dataContext.Manipulate(_ => _.Products.Add(_product));
         }
-
-        [When("کالا با عنوان ‘شیرکاله ‘ " +
-            "و قیمت ‘3500’ " +
-            "و با دسته بندی ‘ لبنیات’" +
-            " و کد ‘101’ " +
+        [And("کالا با عنوان ‘ماست کاله’" +
+            " و قیمت ‘5000’" +
+            " و با دسته بندی ‘ لبنیات’ " +
+            "و کد ‘105’ " +
             "وحداقل موجودی ‘1’ " +
             "و حداکثر موجودی ‘10’ " +
-            " در فهرست دسته بندی کالا را به کالا" +
-            " با عنوان ‘شیر سویا کاله  ‘ " +
-            "و قیمت ‘3500’ " +
-            "و با دسته بندی ‘ لبنیات’" +
-            " و کد ‘101’ " +
-            "وحداقل موجودی ‘1’ " +
-            "و حداکثر موجودی ‘10’" +
-            "   ویرایش می کنم.")]
+            " در فهرست کالاها وجود داشته باشد ")]
+        public void AndGiven()
+        {
+            var product = new Product()
+            {
+                Name = "ماست کاله",
+                Price = 5000,
+                CategoryId = _category.Id,
+                Id = 105,
+                MinimumStock = 1,
+                MaximumStock = 10
+            };
+            _dataContext.Manipulate(_ => _.Products.Add(product));
+        }
+
+        [When("کالا با عنوان ‘شیر کاله’ " +
+            "و قیمت ‘3500’" +
+            " و با دسته بندی ‘ لبنیات’ " +
+            "و کد ‘101’ " +
+            "وحداقل موجودی ‘1’" +
+            " و حداکثر موجودی ‘10’ " +
+            " در فهرست دسته بندی کالا " +
+            "را به کالا با " +
+            "عنوان ‘شیر کاله ‘ " +
+            "و با قیمت ‘3500’ " +
+            "و با دسته بندی ‘ لبنیات’ " +
+            "و کد ‘105’" +
+            " وحداقل موجودی ‘1’" +
+            " و حداکثر موجودی ‘10’  " +
+            "ویرایش می کنم.")]
 
         public void When()
         {
             _dto = new UpdateProductDto()
             {
-                Name = _product.Name,   
-                Price = 5000,
+                Name = _product.Name,
+                Price = _product.Price,
                 CategoryId = _product.CategoryId,
-                Id = _product.Id,
+                Id = 105,
                 MinimumStock = _product.MinimumStock,
                 MaximumStock = _product.MaximumStock
 
             };
-            _sut.Update(_product.Id, _dto);
+           expected =()=> _sut.Update(_product.Id, _dto);
         }
 
-        [Then("کالا با عنوان ‘ شیر سویا کاله ‘ " +
-            "و قیمت ‘3500’" +
-            " و با دسته بندی ‘ لبنیات’" +
-            " و کد ‘101’ " +
-            "در فهرست کالاها باید  وجود داشته باشد.")]
+        [Then("تنها یک کالا با کد ‘105’ در فهرست کالاها باید وجود داشته باشد")]
 
         public void Then()
         {
-            var expected = _dataContext.Products.FirstOrDefault(_ => _.Id == _product.Id);
+            _dataContext.Products.Where(_ => _.Id == _dto.Id).
+                Should().HaveCount(1);
 
-            expected.Name.Should().Be(_dto.Name);
-            expected.Id.Should().Be(_dto.Id);
-            expected.Price.Should().Be(_dto.Price);
-            expected.MinimumStock.Should().Be(_dto.MinimumStock);
-            expected.MaximumStock.Should().Be(_dto.MaximumStock);
-            expected.CategoryId.Should().Be(_dto.CategoryId);
         }
 
+        [And("خطایی با عنوان ‘ کد ویرایش شده تکراری است’ باید رخ دهد ")]
+        public void AndThen()
+        {
+            expected.Should().ThrowExactly<DuplicateProductIdException>();
+        }
         [Fact]
         public void Run()
         {
-            Given();
-            And();
-            When();
-            Then();
+            Runner.RunScenario(
+                 _ => Given()
+               , _ => And()
+               , _ => AndGiven()
+               , _ => When()
+               , _ => Then()
+               , _ => AndThen());
         }
-           
+
 
     }
-    }
+}

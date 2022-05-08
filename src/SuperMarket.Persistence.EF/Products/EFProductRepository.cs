@@ -31,5 +31,10 @@ namespace SuperMarket.Persistence.EF.Products
         {
             return _dataContext.Products.Any(_ => _.Id == id); 
         }
+
+        public void Update(Product product)
+        {
+            _dataContext.Products.Update(product);
+        }
     }
 }

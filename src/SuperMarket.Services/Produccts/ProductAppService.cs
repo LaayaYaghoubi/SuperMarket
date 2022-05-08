@@ -47,13 +47,20 @@ namespace SuperMarket.Services.Produccts
         public void Update(int id, UpdateProductDto dto)
         {
             var product = _repository.FindById(id);
-
+            var isIdDuplicate = _repository.IsExistProductId(dto.Id);
+            if (isIdDuplicate && id != dto.Id)
+            {
+                throw new DuplicateProductIdException();
+            }
             product.Id = dto.Id;
             product.MaximumStock = dto.MaximumStock;    
             product.MinimumStock = dto.MinimumStock;
             product.Name = dto.Name;
             product.Price = dto.Price;
-            product.CategoryId = dto.CategoryId;    
+            product.CategoryId = dto.CategoryId;
+
+            _repository.Update(product);
+            _unitOfWork.Commit();
             
         }
     }
