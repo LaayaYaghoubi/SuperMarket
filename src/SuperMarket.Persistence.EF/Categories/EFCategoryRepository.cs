@@ -21,14 +21,28 @@ namespace SuperMarket.Persistence.EF.Categories
             _dataContext.Categories.Add(category);
         }
 
+        public void Delete(Category category)
+        {
+           _dataContext.Categories.Remove(category);    
+        }
+
         public Category FindById(int id)
         {
             return _dataContext.Categories.Find(id);
         }
 
+        public IList<GetCategoryDto> GetAll()
+        {
+            return _dataContext.Categories
+                  .Select(_ => new GetCategoryDto
+                  {
+                      Id = _.Id,
+                      Name = _.Name
+                  }).ToList();
+        }
         public bool IsExistCategoryName(string name)
         {
-           return _dataContext.Categories.Any(_ => _.Name == name);  
+            return _dataContext.Categories.Any(_ => _.Name == name);
         }
 
         public void Update(Category category)
@@ -36,4 +50,7 @@ namespace SuperMarket.Persistence.EF.Categories
             _dataContext.Update(category);
         }
     }
-}
+
+    
+    }
+

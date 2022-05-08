@@ -22,15 +22,12 @@ namespace SuperMarket.Specs.Categories
     public class AddCategory : EFDataContextDatabaseFixture
     {
         private readonly EFDataContext _dataContext;
-
         private Category _category;
         private AddCategoryDto _dto;
         private UnitOfWork _unitOfWork;
         private CategoryRepository _categoryRepository;
         private CategoryService _sut;
         
-      
-
         public AddCategory(ConfigurationFixture configuration) : base(configuration)
         {
             _dataContext = CreateDataContext();
