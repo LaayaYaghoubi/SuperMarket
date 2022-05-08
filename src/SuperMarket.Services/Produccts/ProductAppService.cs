@@ -44,6 +44,11 @@ namespace SuperMarket.Services.Produccts
             _unitOfWork.Commit();
         }
 
+        public IList<GetAllProductsDto> GetAll()
+        {
+            return _repository.GetAll();
+        }
+
         public void Update(int id, UpdateProductDto dto)
         {
             var product = _repository.FindById(id);

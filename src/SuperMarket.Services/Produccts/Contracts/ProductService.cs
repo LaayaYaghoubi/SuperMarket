@@ -12,5 +12,7 @@ namespace SuperMarket.Services.Products.Contracts
     {
         void Add(AddProductDto dto);
         void Update(int id, UpdateProductDto dto);
+
+        IList<GetAllProductsDto> GetAll();
     }
 }

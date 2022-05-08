@@ -27,6 +27,20 @@ namespace SuperMarket.Persistence.EF.Products
             return _dataContext.Products.Find(id); 
         }
 
+        public IList<GetAllProductsDto> GetAll()
+        {
+            return _dataContext.Products
+                  .Select(_ => new GetAllProductsDto
+                  {
+                      Id = _.Id,
+                      Name = _.Name,
+                      Price = _.Price,  
+                      MinimumStock = _.MinimumStock,    
+                      MaximumStock = _.MaximumStock,
+                      CategoryId = _.CategoryId,
+                  }).ToList();
+        }
+
         public bool IsExistProductId(int id)
         {
             return _dataContext.Products.Any(_ => _.Id == id); 

@@ -15,5 +15,6 @@ namespace SuperMarket.Services.Products.Contracts
         bool IsExistProductId(int id);
         Product FindById(int id);
         void Update(Product product);
+        IList<GetAllProductsDto> GetAll();
     }
 }
