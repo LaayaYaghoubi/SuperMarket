@@ -1,6 +1,7 @@
 ﻿using SuperMarket.Entities;
 using SuperMarket.Infrastructure.Application;
 using SuperMarket.Services.Produccts.Contracts;
+using SuperMarket.Services.Produccts.Exceptions;
 using SuperMarket.Services.Products.Contracts;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,11 @@ namespace SuperMarket.Services.Produccts
 
         public void Add(AddProductDto dto)
         {
+            var isIdDuplicate = _repository.IsExistProductId(dto.Id);
+            if (isIdDuplicate)
+            {
+                throw new DuplicateProductIdException();
+            }
             var product = new Product()
             {
                 Name = dto.Name,

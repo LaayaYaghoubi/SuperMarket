@@ -12,5 +12,6 @@ namespace SuperMarket.Services.Products.Contracts
     public interface ProductRepository : Repository
     {
         void Add(Product product);
+        bool IsExistProductId(int id);
     }
 }

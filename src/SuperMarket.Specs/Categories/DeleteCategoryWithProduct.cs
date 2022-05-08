@@ -49,7 +49,7 @@ namespace SuperMarket.Specs.Categories
             _dataContext.Manipulate(_ => _.Categories.Add(_category));
         }
 
-        [And(":  کالا با عنوان ‘شیر کاله’ " +
+        [And(":  کالایی با عنوان ‘شیر کاله’ " +
             "و قیمت ‘3500’ " +
             "و با عنوان دسته بندی ‘ لبنیات’" +
             " و کد ‘101’ " +
