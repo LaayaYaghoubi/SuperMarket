@@ -33,7 +33,7 @@ namespace SuperMarket.Specs.Products
         private Product _product;
         private AddProductDto _dto;
         private UnitOfWork _unitOfWork;
-        private ProductRepository _categoryRepository;
+        private ProductRepository _repository;
         private ProductService _sut;
         private Action expected;
 
@@ -41,8 +41,8 @@ namespace SuperMarket.Specs.Products
         {
             _dataContext = CreateDataContext();
             _unitOfWork = new EFUnitOfWork(_dataContext);
-            _categoryRepository = new EFProductRepository(_dataContext);
-            _sut = new ProductAppService(_categoryRepository, _unitOfWork);
+            _repository = new EFProductRepository(_dataContext);
+            _sut = new ProductAppService(_repository, _unitOfWork);
         }
 
         [Given(": دسته بندی با عنوان ‘ لبنیات’ در  فهرست دسته بندی کالاها وجود دارد")]

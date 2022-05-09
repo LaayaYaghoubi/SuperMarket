@@ -15,6 +15,9 @@ namespace SuperMarket.Services.Produccts.Contracts
         public int MinimumStock { get; set; }     
         public int MaximumStock { get; set; }       
         public int CategoryId { get; set; }
+        public int Stock { get; set; }
+        public DateTime ExpirationDate { get; set; }
+
 
     }
 }

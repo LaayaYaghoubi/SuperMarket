@@ -13,7 +13,7 @@ namespace SuperMarket.Persistence.EF.PurchaseVouchers
     {
         public void Configure(EntityTypeBuilder<PurchaseVoucher> builder)
         {
-            builder.ToTable("PurchaseVoucher");
+            builder.ToTable("PurchaseVouchers");
             builder.HasKey(_ => _.Id);
             builder.Property(_ => _.Id)
                 .ValueGeneratedOnAdd()
@@ -24,6 +24,10 @@ namespace SuperMarket.Persistence.EF.PurchaseVouchers
                 .IsRequired();
             builder.Property(_ => _.ProductId)
                 .IsRequired();
+            builder.Property(_ => _.NumberOfProducts)
+               .IsRequired();
+            builder.Property(_ => _.DateOfPurchase)
+               .IsRequired();
 
             builder.HasOne(_ => _.Product)
                .WithOne(_ => _.PurchaseVoucher)

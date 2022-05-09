@@ -30,8 +30,8 @@ namespace SuperMarket.Persistence.EF
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<SalesInvoice> SalesInvoiceS { get; set; }
-        public DbSet<PurchaseVoucher> PurchaseVoucherS { get; set; }
+        public DbSet<SalesInvoice> SalesInvoices { get; set; }
+        public DbSet<PurchaseVoucher> PurchaseVouchers { get; set; }
 
     }
 }

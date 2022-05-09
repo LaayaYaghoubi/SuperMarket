@@ -34,6 +34,7 @@ namespace SuperMarket.Migrations
             .Identity()
             .WithColumn("Name").AsString(50).NotNullable()
             .WithColumn("TotalPrice").AsDecimal().NotNullable()
+            .WithColumn("ExpirationDate").AsDateTime2().Nullable()
             .WithColumn("NumberOfProducts").AsInt32().NotNullable()
             .WithColumn("DateOfPurchase").AsDateTime2().Nullable()
             .WithColumn("ProductId").AsInt32().NotNullable()

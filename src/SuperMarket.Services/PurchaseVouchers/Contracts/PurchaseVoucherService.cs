@@ -1,12 +1,15 @@
-﻿using System;
+﻿using SuperMarket.Infrastructure.Application;
+using SuperMarket.Services.PurchaseVouchers.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SuperMarket.Services.PurchaseVoucher.Contracts
+namespace SuperMarket.Services.PurchaseVouchers.Contracts
 {
-    public interface PurchaseVoucherService
+    public interface PurchaseVoucherService : Service
     {
+        void Add(AddPurchaseVoucherDto dto);
     }
 }

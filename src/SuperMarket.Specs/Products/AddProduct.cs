@@ -27,15 +27,15 @@ namespace SuperMarket.Specs.Products
         private Category _category;
         private AddProductDto _dto;
         private UnitOfWork _unitOfWork;
-        private ProductRepository _categoryRepository;
+        private ProductRepository _repository;
         private ProductService _sut;
 
         public AddProduct(ConfigurationFixture configuration) : base(configuration)
         {
             _dataContext = CreateDataContext();
             _unitOfWork = new EFUnitOfWork(_dataContext);
-            _categoryRepository = new EFProductRepository(_dataContext);
-            _sut = new ProductAppService(_categoryRepository, _unitOfWork);
+            _repository = new EFProductRepository(_dataContext);
+            _sut = new ProductAppService(_repository, _unitOfWork);
         }
         [Given("هیچ کالایی در فهرست کالا وجود ندارد.")]
         public void Given()
