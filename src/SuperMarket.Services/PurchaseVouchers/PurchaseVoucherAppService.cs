@@ -2,6 +2,7 @@
 using SuperMarket.Infrastructure.Application;
 
 using SuperMarket.Services.PurchaseVouchers.Contracts;
+using SuperMarket.Services.PurchaseVouchers.Exceptions;
 
 namespace SuperMarket.Services.PurchaseVouchers
 {
@@ -33,9 +34,16 @@ namespace SuperMarket.Services.PurchaseVouchers
             product.Stock = product.Stock + dto.NumberOfProducts;
             product.ExpirationDate = dto.ExpirationDate;
 
+            
+
             _repository.Add(purchaseVoucher);
             _repository.Update(product);
             _unitOfWork.Commit();
+
+            if (product.Stock > product.MaximumStock)
+            {
+                throw new ProductStockReachedMaximumStockException();
+            }
         }
     }
 }

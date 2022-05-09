@@ -12,6 +12,7 @@ using System.Linq;
 using static BookStore.Specs.BDDHelper;
 using FluentAssertions;
 using Xunit;
+using SuperMarket.Services.PurchaseVouchers.Exceptions;
 
 namespace SuperMarket.Specs.PurchaseVouchers
 {
@@ -21,7 +22,7 @@ namespace SuperMarket.Specs.PurchaseVouchers
      IWantTo = " کالاها را مدیریت  کنم  ",
      InOrderTo = " کالاهای وارد شده را ثبت کنم"
    )]
-    public class AddPurchaseVoucher : EFDataContextDatabaseFixture
+    public class AddPurchaseVoucherWithMaximumProductStock : EFDataContextDatabaseFixture
     {
         private readonly EFDataContext _dataContext;
         private Category _category;
@@ -30,8 +31,9 @@ namespace SuperMarket.Specs.PurchaseVouchers
         private UnitOfWork _unitOfWork;
         private PurchaseVoucherRepository _repository;
         private PurchaseVoucherService _sut;
+        private Action expected;
 
-        public AddPurchaseVoucher(ConfigurationFixture configuration) 
+        public AddPurchaseVoucherWithMaximumProductStock(ConfigurationFixture configuration)
             : base(configuration)
         {
             _dataContext = CreateDataContext();
@@ -57,6 +59,7 @@ namespace SuperMarket.Specs.PurchaseVouchers
             " و با دسته بندی ‘ لبنیات’" +
             " و کد کالا ‘101’ " +
             "وحداقل موجودی ‘1’ " +
+             "و  موجودی ‘4’ " +
             "و حداکثر موجودی ‘100’ " +
             " در فهرست کالاها وجود داشته باشد.")]
 
@@ -84,57 +87,39 @@ namespace SuperMarket.Specs.PurchaseVouchers
         [When("سند ورود کالا با عنوان سند ‘ خرید شیر کاله’" +
             "  و تاریخ انقضا کالا ‘ 2022-05-27 " +
             " و کد کالا ‘101’" +
-            " و تعداد کالا ‘ 10 ‘ " +
-            "و قیمت کل ‘ 35000’" +
+            " و تعداد کالا ‘ 100 ‘ " +
+            "و قیمت کل ‘ 350000’" +
             " را وارد می کنم.")]
 
         public void When()
         {
-
-           
             _dto = new AddPurchaseVoucherDto()
             {
                 Name = "خرید شیر کاله",
                 DateOfPurchase = DateTime.Now,
                 ProductId = _product.Id,
-                NumberOfProducts = 10,
-                TotalPrice = 35000,
+                NumberOfProducts = 100,
+                TotalPrice = 350000,
                 ExpirationDate = DateTime.Parse("2022-05-27T05:21:13.390Z")
             };
-          
-
-            _sut.Add(_dto);
+             expected =()=>  _sut.Add(_dto);
         }
 
-        [Then("سند ورود کالا با عنوان سند " +
-            "‘ خرید شیر کاله’" +
-            "  و تاریخ انقضا کالا ‘ 2022-05-27 " +
-            "و تعداد کالا ‘ 14 ‘ " +
-            "و کد کالا ‘101’ " +
-            "و قیمت کل ‘ 35000’ " +
-            " در فهرست سندهای ورود کالا باید وجود داشته باشد.")]
-
+        [Then(" خطایی با عنوان‘موجودی کالا از حداکثر موجودی بیشتر شده است’ باید رخ دهد")]
         public void Then()
         {
-            var expected = _dataContext.PurchaseVouchers.FirstOrDefault();
-            expected.Name.Should().Be(_dto.Name);
-            expected.ProductId.Should().Be(_dto.ProductId);
-            expected.TotalPrice.Should().Be(_dto.TotalPrice);
-            expected.NumberOfProducts.Should().Be(_dto.NumberOfProducts);
-            expected.DateOfPurchase.Should().Be(_dto.DateOfPurchase);
-            expected.Product.Stock.Should().Be(_product.Stock); 
-            expected.Product.Stock.Should().Be(14); 
-            expected.Product.ExpirationDate.Should().Be(_dto.ExpirationDate);
-
+            expected.Should().ThrowExactly<ProductStockReachedMaximumStockException>();
         }
         [Fact]
         public void Run()
         {
-            Given();
-            And();
-            AndGiven();
-            When();
-            Then();
+            Runner.RunScenario(
+                 _ => Given()
+               , _ => And()
+               , _ => AndGiven()
+               , _ => When()
+               , _ => Then()
+               );
         }
     }
 }
