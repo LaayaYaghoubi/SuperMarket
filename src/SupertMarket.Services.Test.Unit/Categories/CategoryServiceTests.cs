@@ -7,7 +7,10 @@ using SuperMarket.Persistence.EF;
 using SuperMarket.Persistence.EF.Categories;
 using SuperMarket.Services.Categories;
 using SuperMarket.Services.Categories.Contracts;
+using SuperMarket.Services.Categories.Exceptions;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace SupertMarket.Services.Test.Unit.Categories
@@ -33,15 +36,15 @@ namespace SupertMarket.Services.Test.Unit.Categories
         [Fact]
         public void Add_adds_category_properly()
         {
-            var dto = new AddCategoryDto()
+            var category = new AddCategoryDto()
             {
                 Name = "dairy"
             };
 
-            _sut.Add(dto);
+            _sut.Add(category);
 
             _dataContext.Categories.Should()
-              .Contain(_ => _.Name == dto.Name);
+              .Contain(_ => _.Name == category.Name);
         }
         [Fact]
         public void GetAll_returns_all_categories()
@@ -49,7 +52,7 @@ namespace SupertMarket.Services.Test.Unit.Categories
             var categories = new List<Category>
             {
                 new Category { Name = "dairy"},
-                new Category { Name = "dairy2"}, 
+                new Category { Name = "dairy2"},
             };
             _dataContext.Manipulate(_ =>
             _.Categories.AddRange(categories));
@@ -59,7 +62,49 @@ namespace SupertMarket.Services.Test.Unit.Categories
             expected.Should().HaveCount(2);
             expected.Should().Contain(_ => _.Name == "dairy");
             expected.Should().Contain(_ => _.Name == "dairy2");
-         
+
         }
+
+        [Fact]
+        public void Update_updates_category_based_on_its_id()
+        {
+            var category = new Category()
+            {
+                Name = "dairy"
+            };
+            _dataContext.Manipulate(_ => _.Categories.Add(category));
+            UpdateCategoryDto updatedCategory = new UpdateCategoryDto()
+            {
+                Name = "Editeddairy"
+            };
+
+            _sut.Update(category.Id, updatedCategory);
+
+            var expected = _dataContext.Categories.FirstOrDefault(_ => _.Id == category.Id);
+            expected.Name.Should().Be(updatedCategory.Name);
+        }
+
+        [Fact]
+        public void update_throw_exception_ThereIsNoCtegoryWithThisIdException_if_selected_category_doesnt_exist()
+        {
+            int DummyId = 123;
+            var category = new Category()
+            {
+                Name = "dairy"
+            };
+            _dataContext.Manipulate(_ => _.Categories.Add(category));
+            UpdateCategoryDto updatedCategory = new UpdateCategoryDto()
+            {
+                Name = "Editeddairy"
+            };
+
+            Action expected = () => _sut.Update(DummyId, updatedCategory);
+
+            expected.Should().ThrowExactly<ThereIsNoCtegoryWithThisIdException>();
+
+        }
+
+
     }
 }
+
