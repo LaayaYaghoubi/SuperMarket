@@ -21,8 +21,6 @@ namespace SupertMarket.Services.Test.Unit.Categories
         private readonly CategoryRepository _repository;
         private readonly EFDataContext _dataContext;
         private readonly UnitOfWork _unitOfWork;
-
-
         public CategoryServiceTests()
         {
             _dataContext =
@@ -44,7 +42,6 @@ namespace SupertMarket.Services.Test.Unit.Categories
               .Contain(_ => _.Name == category.Name);
         }
 
-
         [Fact]
         public void Add_throws_exception_DuplicateCategoryNameException_if__category_name_duplicated()
         {
@@ -55,7 +52,6 @@ namespace SupertMarket.Services.Test.Unit.Categories
 
             expected.Should().ThrowExactly<DuplicateCategoryNameException>();
         }
-
 
         [Fact]
         public void GetAll_returns_all_categories()
@@ -79,9 +75,7 @@ namespace SupertMarket.Services.Test.Unit.Categories
 
             var expected = _dataContext.Categories.FirstOrDefault(_ => _.Id == category.Id);
             expected.Name.Should().Be(categoryChanges.Name);
-        }
-
-   
+        } 
 
         [Fact]
         public void Update_throws_exception_DuplicateCategoryNameException_if_updated_category_name_duplicated()
@@ -94,8 +88,6 @@ namespace SupertMarket.Services.Test.Unit.Categories
             expected.Should().ThrowExactly<DuplicateCategoryNameException>();
         }
 
-       
-
         [Fact]
         public void Update_throws_exception_ThereIsNoCtegoryWithThisIdException_if_selected_category_doesnt_exist()
         {
@@ -105,16 +97,12 @@ namespace SupertMarket.Services.Test.Unit.Categories
             Action expected = () => _sut.Update(DummyId, categoryChanges);
 
             expected.Should().ThrowExactly<ThereIsNoCtegoryWithThisIdException>();
-
         }
+
         [Fact]
         public void delete_deletes_category_based_on_its_id()
         {
-            var category = new Category()
-            {
-                Name = "dairy"
-            };
-            _dataContext.Manipulate(_ => _.Categories.Add(category));
+            Category category = CreateAndAddACategory();
 
             _sut.Delete(category.Id);
 
@@ -125,17 +113,37 @@ namespace SupertMarket.Services.Test.Unit.Categories
         public void Delete_throws_exception_if_selected_category_doesnt_exist_while_deleting()
         {
             int DummyId = 123;
-            var category = new Category()
-            {
-                Name = "dairy"
-            };
-            _dataContext.Manipulate(_ => _.Categories.Add(category));
 
             Action expected = () => _sut.Delete(DummyId);
 
             expected.Should().ThrowExactly<ThereIsNoCtegoryWithThisIdException>();
         }
 
+        [Fact]
+        public void Delete_throws_exception_CategoryContainProductException_if_selected_category_to_delete_contains_product()
+        {
+            Category category = CreateAndAddACategory();
+            CreateAndAddAProductToCreatedCategory(category);
+
+            Action expected = () => _sut.Delete(category.Id);
+
+            expected.Should().ThrowExactly<CategoryContainProductException>();
+
+        }
+
+        private void CreateAndAddAProductToCreatedCategory(Category category)
+        {
+            Product product = new Product()
+            {
+                Id = 101,
+                Name = "شیر کاله",
+                Price = 3500,
+                CategoryId = category.Id,
+                MinimumStock = 1,
+                MaximumStock = 10,
+            };
+            _dataContext.Manipulate(_ => _.Products.Add(product));
+        }
         private static AddCategoryDto CreateACategory()
         {
             return new AddCategoryDto()
@@ -143,7 +151,6 @@ namespace SupertMarket.Services.Test.Unit.Categories
                 Name = "dairy"
             };
         }
-
         private static AddCategoryDto CreateACategoryWithSameName()
         {
             return new AddCategoryDto()
@@ -151,7 +158,6 @@ namespace SupertMarket.Services.Test.Unit.Categories
                 Name = "dairy"
             };
         }
-
         private void AddACategory()
         {
             var category = new Category()
@@ -160,7 +166,6 @@ namespace SupertMarket.Services.Test.Unit.Categories
             };
             _dataContext.Manipulate(_ => _.Categories.Add(category));
         }
-
         private void CreateAndAddTwoCarwgories()
         {
             var categories = new List<Category>
@@ -178,7 +183,6 @@ namespace SupertMarket.Services.Test.Unit.Categories
                 Name = "Editeddairy"
             };
         }
-
         private Category CreateAndAddACategory()
         {
             var category = new Category()
@@ -195,7 +199,6 @@ namespace SupertMarket.Services.Test.Unit.Categories
                 Name = "dairy"
             };
         }
-
         private List<Category> CreateAndAddTwoCategories()
         {
             var categories = new List<Category>
