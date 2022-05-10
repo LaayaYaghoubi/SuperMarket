@@ -33,6 +33,22 @@ namespace SuperMarket.Persistence.EF.PurchaseVouchers
 
         }
 
+        public IList<GetAllPurchaseVoucherDto> GetAll()
+        {
+            return _dataContext.PurchaseVouchers
+                 .Select(_ => new GetAllPurchaseVoucherDto
+                 {
+                     Id = _.Id,
+                     Name = _.Name,
+                     ProductId = _.ProductId,
+                     DateOfPurchase = _.DateOfPurchase,
+                     ExpirationDate = _.ExpirationDate,
+                     TotalPrice = _.TotalPrice, 
+                     NumberOfProducts = _.NumberOfProducts,
+                    
+                 }).ToList();
+        }
+
         public void Update(PurchaseVoucher purchaseVoucher)
         {
             _dataContext.PurchaseVouchers.Update(purchaseVoucher);

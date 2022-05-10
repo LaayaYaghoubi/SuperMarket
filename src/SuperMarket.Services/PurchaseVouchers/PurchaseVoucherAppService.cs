@@ -3,6 +3,7 @@ using SuperMarket.Infrastructure.Application;
 
 using SuperMarket.Services.PurchaseVouchers.Contracts;
 using SuperMarket.Services.PurchaseVouchers.Exceptions;
+using System.Collections.Generic;
 
 namespace SuperMarket.Services.PurchaseVouchers
 {
@@ -44,6 +45,11 @@ namespace SuperMarket.Services.PurchaseVouchers
             _unitOfWork.Commit();
 
           
+        }
+
+        public IList<GetAllPurchaseVoucherDto> GetAll()
+        {
+            return _repository.GetAll();
         }
 
         public void Update(int id, UpdatePurchaseVoucherDto dto)
