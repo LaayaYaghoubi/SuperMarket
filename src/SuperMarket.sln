@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperMarket.Tests.Tools", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperMarket.Specs", "SuperMarket.Specs\SuperMarket.Specs.csproj", "{2DD4D0D1-50DD-4537-88E5-6297D58126B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SupertMarket.Services.Test.Unit", "SupertMarket.Services.Test.Unit\SupertMarket.Services.Test.Unit.csproj", "{BB20A2C6-F329-4B46-AE9E-2CD25AE0F511}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{2DD4D0D1-50DD-4537-88E5-6297D58126B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DD4D0D1-50DD-4537-88E5-6297D58126B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DD4D0D1-50DD-4537-88E5-6297D58126B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB20A2C6-F329-4B46-AE9E-2CD25AE0F511}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB20A2C6-F329-4B46-AE9E-2CD25AE0F511}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB20A2C6-F329-4B46-AE9E-2CD25AE0F511}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB20A2C6-F329-4B46-AE9E-2CD25AE0F511}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +80,7 @@ Global
 		{BB6E549B-CEEF-460C-A0A6-E1D838B14F5E} = {8EEF4DD2-E0DF-4688-AE8F-C072E20C57C6}
 		{7F41D2F4-6E96-40D3-99B2-12E60F2C7A45} = {C29A50BD-569E-44C8-B0D2-6F937CC859DA}
 		{2DD4D0D1-50DD-4537-88E5-6297D58126B7} = {C29A50BD-569E-44C8-B0D2-6F937CC859DA}
+		{BB20A2C6-F329-4B46-AE9E-2CD25AE0F511} = {C29A50BD-569E-44C8-B0D2-6F937CC859DA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0F8BD9B3-1EE3-45BE-AF27-2391CD08C44C}
