@@ -27,7 +27,6 @@ namespace SuperMarket.Specs.PurchaseVouchers
         private Category _category;
         private Product _product;
         private PurchaseVoucher _purchaseVoucher;
-        private GetAllPurchaseVoucherDto _dto;
         private UnitOfWork _unitOfWork;
         private PurchaseVoucherRepository _repository;
         private PurchaseVoucherService _sut;

@@ -48,7 +48,7 @@ namespace SuperMarket.Migrations
               .Identity()
               .WithColumn("ClientName").AsString(50).NotNullable()
               .WithColumn("TotalPrice").AsDecimal().NotNullable()
-              .WithColumn("NumberOfProducts").AsDecimal().NotNullable()
+              .WithColumn("NumberOfProducts").AsInt32().NotNullable()
                .WithColumn("DateOfSale").AsDateTime2().Nullable()
               .WithColumn("ProductId").AsInt32().NotNullable()
               .ForeignKey("FK_SalesInvoices_Products", "Products", "Id")

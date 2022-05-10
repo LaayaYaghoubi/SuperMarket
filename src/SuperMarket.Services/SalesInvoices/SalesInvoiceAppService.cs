@@ -48,5 +48,10 @@ namespace SuperMarket.Services.SalesInvoices
 
 
         }
+
+        public IList<GetAllSalesInvoiceDto> GetAll()
+        {
+            return _repository.GetAll();
+        }
     }
 }

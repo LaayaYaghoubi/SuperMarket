@@ -26,6 +26,22 @@ namespace SuperMarket.Persistence.EF.SalesInvoices
            return _dataContext.Products.Find(productId);
         }
 
+        public IList<GetAllSalesInvoiceDto> GetAll()
+        {
+            return _dataContext.SalesInvoices
+                .Select(_ => new GetAllSalesInvoiceDto
+                {
+                    Id = _.Id,
+                    ClientName = _.ClientName,  
+                    NumberOfProducts = _.NumberOfProducts,
+                    DateOfSale = _.DateOfSale,
+                    ProductId = _.ProductId,
+                    TotalPrice = _.TotalPrice,  
+
+                }).ToList();
+
+        }
+
         public void UpdateProduct(Product product)
         {
           _dataContext.Products.Update(product);    

@@ -13,5 +13,6 @@ namespace SuperMarket.Services.SalesInvoices.Contracts
         Product FindProductById(int productId);
         void Add(SalesInvoice salesInvoice);
         void UpdateProduct(Product product);
+        IList<GetAllSalesInvoiceDto> GetAll();
     }
 }

@@ -10,5 +10,6 @@ namespace SuperMarket.Services.SalesInvoices.Contracts
     public interface SalesInvoiceService : Service
     {
         void Add(AddSalesInvoiceDto dto);
+        IList<GetAllSalesInvoiceDto> GetAll();
     }
 }
