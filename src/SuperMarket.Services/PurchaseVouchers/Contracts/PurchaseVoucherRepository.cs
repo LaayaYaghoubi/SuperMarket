@@ -12,6 +12,8 @@ namespace SuperMarket.Services.PurchaseVouchers.Contracts
     {
         void Add(PurchaseVoucher purchaseVoucher);
         Product FindProductById(int productId);
-        void Update(Product product);
+        void UpdateProduct(Product product);
+        PurchaseVoucher FindVoucherById(int id);
+        void Update(PurchaseVoucher purchaseVoucher);
     }
 }

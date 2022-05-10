@@ -11,5 +11,6 @@ namespace SuperMarket.Services.PurchaseVouchers.Contracts
     public interface PurchaseVoucherService : Service
     {
         void Add(AddPurchaseVoucherDto dto);
+        void Update(int id, UpdatePurchaseVoucherDto dto);
     }
 }

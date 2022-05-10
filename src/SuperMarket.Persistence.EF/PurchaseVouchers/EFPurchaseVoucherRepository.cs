@@ -27,7 +27,18 @@ namespace SuperMarket.Persistence.EF.PurchaseVouchers
           return  _dataContext.Products.Find(productId);
         }
 
-        public void Update(Product product)
+        public PurchaseVoucher FindVoucherById(int id)
+        {
+            return _dataContext.PurchaseVouchers.Find(id);
+
+        }
+
+        public void Update(PurchaseVoucher purchaseVoucher)
+        {
+            _dataContext.PurchaseVouchers.Update(purchaseVoucher);
+        }
+
+        public void UpdateProduct(Product product)
         {
             _dataContext.Products.Update(product);
         }

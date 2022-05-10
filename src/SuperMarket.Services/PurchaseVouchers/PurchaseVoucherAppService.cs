@@ -37,13 +37,33 @@ namespace SuperMarket.Services.PurchaseVouchers
             
 
             _repository.Add(purchaseVoucher);
-            _repository.Update(product);
+            _repository.UpdateProduct(product);
             _unitOfWork.Commit();
 
             if (product.Stock > product.MaximumStock)
             {
                 throw new ProductStockReachedMaximumStockException();
             }
+        }
+
+        public void Update(int id, UpdatePurchaseVoucherDto dto)
+        {
+            var purchaseVoucher = _repository.FindVoucherById(id);
+            purchaseVoucher.Id = dto.Id;
+            purchaseVoucher.Name = dto.Name;
+            purchaseVoucher.TotalPrice = dto.TotalPrice;
+            purchaseVoucher.NumberOfProducts = dto.NumberOfProducts;    
+            purchaseVoucher.ProductId = dto.ProductId;  
+            purchaseVoucher.DateOfPurchase = dto.DateOfPurchase;
+            purchaseVoucher.ExpirationDate = dto.ExpirationDate;
+
+            var product = _repository.FindProductById(dto.ProductId);
+            product.Stock = product.Stock + dto.NumberOfProducts;
+            product.ExpirationDate = dto.ExpirationDate;
+
+            _repository.Update(purchaseVoucher);
+            _repository.UpdateProduct(product);
+            _unitOfWork.Commit();
         }
     }
 }

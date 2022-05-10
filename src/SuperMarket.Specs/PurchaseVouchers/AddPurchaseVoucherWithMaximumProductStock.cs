@@ -19,7 +19,7 @@ namespace SuperMarket.Specs.PurchaseVouchers
     [Scenario("ورود  کالا")]
     [Feature("",
      AsA = "فروشنده ",
-     IWantTo = " کالاها را مدیریت  کنم  ",
+     IWantTo = "  کالاها را مدیریت  کنم  ",
      InOrderTo = " کالاهای وارد شده را ثبت کنم"
    )]
     public class AddPurchaseVoucherWithMaximumProductStock : EFDataContextDatabaseFixture
