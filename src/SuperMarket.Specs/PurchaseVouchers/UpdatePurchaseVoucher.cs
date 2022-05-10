@@ -9,10 +9,7 @@ using SuperMarket.Persistence.EF.PurchaseVouchers;
 using SuperMarket.Services.PurchaseVouchers;
 using SuperMarket.Services.PurchaseVouchers.Contracts;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 using static BookStore.Specs.BDDHelper;
 
@@ -34,7 +31,7 @@ namespace SuperMarket.Specs.PurchaseVouchers
         private UnitOfWork _unitOfWork;
         private PurchaseVoucherRepository _repository;
         private PurchaseVoucherService _sut;
-        private Action expected;
+       
         public UpdatePurchaseVoucher(ConfigurationFixture configuration) 
             : base(configuration)
         {
@@ -129,12 +126,7 @@ namespace SuperMarket.Specs.PurchaseVouchers
             };
             _sut.Update(_purchaseVoucher.Id, _dto);
         }
-        [Then("سند ورود کالا با عنوان سند ‘ خرید شیر کاله’" +
-            "  و تاریخ انقضا کالا ‘ 2022-05-27 " +
-            " و کد کالا ‘101’" +
-            " و تعداد کالا ‘ 20 ‘ " +
-            "و قیمت کل ‘ 70000’" +
-            "در فهرست ورود کالا ها به سند ورود کالا با" +
+        [Then("سند ورود کالا با" +
             "عنوان سند ‘ خرید شیر کاله’" +
             "  و تاریخ انقضا کالا ‘ 2022-05-30 " +
             " و کد کالا ‘101’" +
