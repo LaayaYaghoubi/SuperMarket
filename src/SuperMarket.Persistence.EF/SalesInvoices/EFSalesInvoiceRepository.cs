@@ -21,6 +21,11 @@ namespace SuperMarket.Persistence.EF.SalesInvoices
            _dataContext.SalesInvoices.Add(salesInvoice);
         }
 
+        public SalesInvoice FindInvoiceById(int id)
+        {
+            return _dataContext.SalesInvoices.Find(id);
+        }
+
         public Product FindProductById(int productId)
         {
            return _dataContext.Products.Find(productId);
@@ -40,6 +45,11 @@ namespace SuperMarket.Persistence.EF.SalesInvoices
 
                 }).ToList();
 
+        }
+
+        public void Update(SalesInvoice salesInvoice)
+        {
+           _dataContext.SalesInvoices.Update(salesInvoice);
         }
 
         public void UpdateProduct(Product product)

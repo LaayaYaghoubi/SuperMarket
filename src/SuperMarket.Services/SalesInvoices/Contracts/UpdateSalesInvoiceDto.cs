@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SuperMarket.Services.SalesInvoices.Contracts
 {
-    public class AddSalesInvoiceDto
+    public class UpdateSalesInvoiceDto
     {
         public string ClientName { get; set; }
         public int ProductId { get; set; }

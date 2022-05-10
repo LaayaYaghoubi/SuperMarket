@@ -8,7 +8,6 @@ namespace SuperMarket.Services.PurchaseVouchers.Contracts
 {
     public class UpdatePurchaseVoucherDto
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public int ProductId { get; set; }
         public decimal TotalPrice { get; set; }

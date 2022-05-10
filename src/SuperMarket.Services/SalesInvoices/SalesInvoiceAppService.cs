@@ -53,5 +53,29 @@ namespace SuperMarket.Services.SalesInvoices
         {
             return _repository.GetAll();
         }
+
+        public void Update(int id ,UpdateSalesInvoiceDto dto)
+        {
+            var salesInvoice = _repository.FindInvoiceById(id);
+
+            salesInvoice.NumberOfProducts = dto.NumberOfProducts;
+            salesInvoice.DateOfSale = dto.DateOfSale;
+            salesInvoice.ClientName = dto.ClientName;
+            salesInvoice.ProductId = dto.ProductId;
+            salesInvoice.TotalPrice = dto.TotalPrice;
+            
+
+            var product = _repository.FindProductById(dto.ProductId);
+            product.Stock = product.Stock - dto.NumberOfProducts;     
+
+            if (product.Stock <= product.MinimumStock)
+            {
+                throw new ProductStockReachedMinimumStockException();
+            }
+
+            _repository.Update(salesInvoice);
+            _repository.UpdateProduct(product);
+            _unitOfWork.Commit();
+        }
     }
 }

@@ -117,7 +117,7 @@ namespace SuperMarket.Specs.PurchaseVouchers
         {
             _dto = new UpdatePurchaseVoucherDto()
             {
-                Id = _purchaseVoucher.Id,
+              
                 Name = _purchaseVoucher.Name,
                 DateOfPurchase = _purchaseVoucher.DateOfPurchase,
                 ProductId = _product.Id,

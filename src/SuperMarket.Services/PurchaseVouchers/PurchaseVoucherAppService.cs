@@ -55,7 +55,7 @@ namespace SuperMarket.Services.PurchaseVouchers
         public void Update(int id, UpdatePurchaseVoucherDto dto)
         {
             var purchaseVoucher = _repository.FindVoucherById(id);
-            purchaseVoucher.Id = dto.Id;
+           
             purchaseVoucher.Name = dto.Name;
             purchaseVoucher.TotalPrice = dto.TotalPrice;
             purchaseVoucher.NumberOfProducts = dto.NumberOfProducts;    

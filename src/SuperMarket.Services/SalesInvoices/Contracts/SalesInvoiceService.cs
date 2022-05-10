@@ -11,5 +11,6 @@ namespace SuperMarket.Services.SalesInvoices.Contracts
     {
         void Add(AddSalesInvoiceDto dto);
         IList<GetAllSalesInvoiceDto> GetAll();
+        void Update(int id, UpdateSalesInvoiceDto dto);
     }
 }
