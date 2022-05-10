@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SuperMarket.Entities;
+using SuperMarket.Services.SalesInvoices.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +8,27 @@ using System.Threading.Tasks;
 
 namespace SuperMarket.Persistence.EF.SalesInvoices
 {
-    public class EFSalesInvoiceRepository
+    public class EFSalesInvoiceRepository : SalesInvoiceRepository
     {
+        private readonly EFDataContext _dataContext;
+        public EFSalesInvoiceRepository(EFDataContext dataContext)
+        {
+            _dataContext = dataContext;
+        }
+
+        public void Add(SalesInvoice salesInvoice)
+        {
+           _dataContext.SalesInvoices.Add(salesInvoice);
+        }
+
+        public Product FindProductById(int productId)
+        {
+           return _dataContext.Products.Find(productId);
+        }
+
+        public void UpdateProduct(Product product)
+        {
+          _dataContext.Products.Update(product);    
+        }
     }
 }

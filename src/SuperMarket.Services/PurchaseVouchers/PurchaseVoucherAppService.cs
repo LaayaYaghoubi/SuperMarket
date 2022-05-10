@@ -35,7 +35,7 @@ namespace SuperMarket.Services.PurchaseVouchers
             product.Stock = product.Stock + dto.NumberOfProducts;
             product.ExpirationDate = dto.ExpirationDate;
 
-            if (product.Stock > product.MaximumStock)
+            if (product.Stock >= product.MaximumStock)
             {
                 throw new ProductStockReachedMaximumStockException();
             }
@@ -67,7 +67,7 @@ namespace SuperMarket.Services.PurchaseVouchers
             product.Stock = product.Stock + dto.NumberOfProducts;
             product.ExpirationDate = dto.ExpirationDate;
 
-            if (product.Stock > product.MaximumStock)
+            if (product.Stock >= product.MaximumStock)
             {
                 throw new ProductStockReachedMaximumStockException();
             }

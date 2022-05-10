@@ -22,7 +22,7 @@ namespace SuperMarket.Persistence.EF.SalesInvoices
                 .IsRequired();
             builder.Property(_ => _.ProductId)
                 .IsRequired();
-            builder.Property(_ => _.Date)
+            builder.Property(_ => _.DateOfSale)
                 .IsRequired();
             builder.Property(_ => _.TotalPrice)
                 .IsRequired();
