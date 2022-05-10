@@ -16,5 +16,6 @@ namespace SuperMarket.Services.SalesInvoices.Contracts
         IList<GetAllSalesInvoiceDto> GetAll();
         SalesInvoice FindInvoiceById(int id);
         void Update(SalesInvoice salesInvoice);
+        void Delete(SalesInvoice salesInvoice);
     }
 }
