@@ -1,6 +1,5 @@
 ﻿using BookStore.Specs.Infrastructure;
 using FluentAssertions;
-using SuperMarket.Entities;
 using SuperMarket.Persistence.EF;
 using SuperMarket.Services.Categories.Contracts;
 using System.Linq;

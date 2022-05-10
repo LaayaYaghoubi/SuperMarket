@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SuperMarket.Services.Categories.Exceptions
 {
-    internal class ThereIsNoCtegoryWithThisIdException
+    public class ThereIsNoCtegoryWithThisIdException : Exception
     {
     }
 }
