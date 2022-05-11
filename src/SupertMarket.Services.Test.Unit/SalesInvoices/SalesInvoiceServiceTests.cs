@@ -120,6 +120,24 @@ namespace SupertMarket.Services.Test.Unit.SalesInvoices
             expected.Should().Contain(_ => _.DateOfSale == salesInvoice.DateOfSale);
         }
 
+        [Fact]
+        public void Delete_deletes_salesInvoice_properly()
+        {
+            Product product = CreateAndAddAProduct();
+            SalesInvoice salesInvoice = CreateAndAddAsalesInvoice(product);
+
+            _sut.Delete(salesInvoice.Id);
+
+            _dataContext.SalesInvoices.Should().NotContain(_ => _.ClientName == salesInvoice.ClientName);
+            _dataContext.SalesInvoices.Should().NotContain(_ => _.NumberOfProducts == salesInvoice.NumberOfProducts);
+            _dataContext.SalesInvoices.Should().NotContain(_ => _.DateOfSale == salesInvoice.DateOfSale);
+            _dataContext.SalesInvoices.Should().NotContain(_ => _.TotalPrice == salesInvoice.TotalPrice);
+            _dataContext.SalesInvoices.Should().NotContain(_ => _.ProductId == salesInvoice.ProductId);
+            var expectedProduct = _dataContext.Products.FirstOrDefault(_ => _.Id == salesInvoice.ProductId);
+            expectedProduct.Stock.Should().Be(product.Stock);
+
+        }
+
         private static UpdateSalesInvoiceDto ChangeCreatedSaleInvoiceToMax(SalesInvoice salesInvoice)
         {
             return new UpdateSalesInvoiceDto()
