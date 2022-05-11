@@ -90,8 +90,32 @@ namespace SupertMarket.Services.Test.Unit.SalesInvoices
           Action expected =()=>  _sut.Update(FakeId, dto);
 
             expected.Should().ThrowExactly<ThereIsNoPurchaseVoucherWithThisIdException>();
-
         }
+        [Fact]
+        public void update_throws_exception_ProductStockReachedMinimumStockException_when_selected_invoice_does_not_exist()
+        {
+
+            Product product = CreateAndAddAProduct();
+            SalesInvoice salesInvoice = CreateAndAddAsalesInvoice(product);
+            UpdateSalesInvoiceDto dto = ChangeCreatedSaleInvoiceToMaxstock(salesInvoice);
+
+            Action expected = () => _sut.Update(salesInvoice.Id, dto);
+
+            expected.Should().ThrowExactly<ProductStockReachedMinimumStockException>();
+        }
+
+        private static UpdateSalesInvoiceDto ChangeCreatedSaleInvoiceToMaxstock(SalesInvoice salesInvoice)
+        {
+            return new UpdateSalesInvoiceDto()
+            {
+                ClientName = salesInvoice.ClientName,
+                DateOfSale = salesInvoice.DateOfSale,
+                NumberOfProducts = 50,
+                TotalPrice = 175000,
+                ProductId = salesInvoice.ProductId,
+            };
+        }
+
         private static UpdateSalesInvoiceDto ChangeCreatedSalesInvoice(SalesInvoice salesInvoice)
         {
             return new UpdateSalesInvoiceDto()
