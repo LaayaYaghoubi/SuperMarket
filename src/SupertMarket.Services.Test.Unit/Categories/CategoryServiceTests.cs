@@ -128,7 +128,6 @@ namespace SupertMarket.Services.Test.Unit.Categories
             Action expected = () => _sut.Delete(category.Id);
 
             expected.Should().ThrowExactly<CategoryContainProductException>();
-
         }
 
         private void CreateAndAddAProductToCreatedCategory(Category category)

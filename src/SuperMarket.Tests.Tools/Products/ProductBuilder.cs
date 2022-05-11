@@ -15,12 +15,18 @@ namespace SuperMarket.Tests.Tools.Products
         {
             product = new Product()
             {
+                Id = 104,
                 Name = "Milk",
                 Price = 3400,
                 CategoryId = category.Id,
                 MaximumStock = 50,
                 MinimumStock = 10,
             };
+        }
+        public ProductBuilder WittId(int id)
+        {
+            product.Id = id;
+            return this;
         }
         public ProductBuilder WithName(string name)
         {
@@ -57,21 +63,34 @@ namespace SuperMarket.Tests.Tools.Products
             product.CategoryId = categoryId;
             return this;
         }
-        public ProductBuilder WithPurchaseVoucher(string name, int productId, decimal totalPrice)
+        public ProductBuilder WithPurchaseVoucher(decimal totalPrice, 
+            int numberOfProducts, DateTime expirationDate)
         {
-            //product.PurchaseVoucher = new PurchaseVoucher
-            //{
-            //  Name = name,
-            //  ProductId = productId,    
-            //  TotalPrice = totalPrice,
-
-            //};
+            product.PurchaseVoucher = new PurchaseVoucher()
+            {
+                Name = product.Name,
+                TotalPrice = totalPrice,
+                NumberOfProducts = numberOfProducts,
+                ExpirationDate = expirationDate,
+                ProductId = product.Id,
+                DateOfPurchase = DateTime.Now
+        };
             return this;
-            
         }
 
-
-
+        public ProductBuilder WithSalesInvoice(decimal totalPrice,
+            int numberOfProducts, string clientName)
+        {
+            product.SalesInvoice = new SalesInvoice()
+            {
+                ClientName = clientName,
+                TotalPrice = totalPrice,
+                NumberOfProducts = numberOfProducts,
+                ProductId = product.Id,
+                DateOfSale = DateTime.Now
+            };
+            return this;
+        }
     }
 
     }
