@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <Folder Include="SalesInvoices\" />
-    <Folder Include="PurchaseVoucher\" />
   </ItemGroup>
 
   <ItemGroup>
