@@ -50,6 +50,7 @@ namespace SupertMarket.Services.Test.Unit.SalesInvoices
             expected.DateOfSale.Should().Be(dto.DateOfSale);
             expected.TotalPrice.Should().Be(dto.TotalPrice);
         }
+
         [Fact]
         public void Add_throws_exception_ProductStockReachedMinimumStockException_if_salesinvoiceproducts_reach_minstock_product()
         {
@@ -59,7 +60,49 @@ namespace SupertMarket.Services.Test.Unit.SalesInvoices
             Action expected = () => _sut.Add(dto);
 
             expected.Should().ThrowExactly<ProductStockReachedMinimumStockException>();
+        }
+        [Fact]
+        public void Update_updates_salesinvoice_properly()
+        {
+            Product product = CreateAndAddAProduct();
+            SalesInvoice salesInvoice = CreateAndAddAsalesInvoice(product);
+            UpdateSalesInvoiceDto dto = ChangeCreatedSalesInvoice(salesInvoice);
 
+            _sut.Update(salesInvoice.Id, dto);
+
+            var expected = _dataContext.SalesInvoices.
+               FirstOrDefault(_ => _.Id == salesInvoice.Id);
+            expected.ClientName.Should().Be(dto.ClientName);
+            expected.NumberOfProducts.Should().Be(dto.NumberOfProducts);
+            expected.ProductId.Should().Be(dto.ProductId);
+            expected.DateOfSale.Should().Be(dto.DateOfSale);
+            expected.TotalPrice.Should().Be(dto.TotalPrice);
+        }
+
+        private static UpdateSalesInvoiceDto ChangeCreatedSalesInvoice(SalesInvoice salesInvoice)
+        {
+            return new UpdateSalesInvoiceDto()
+            {
+                TotalPrice = salesInvoice.TotalPrice,
+                ClientName = salesInvoice.ClientName,
+                DateOfSale = salesInvoice.DateOfSale,
+                NumberOfProducts = 4,
+                ProductId = salesInvoice.ProductId,
+            };
+        }
+
+        private SalesInvoice CreateAndAddAsalesInvoice(Product product)
+        {
+            SalesInvoice salesInvoice = new SalesInvoice()
+            {
+                TotalPrice = 7000,
+                ClientName = "MrYaghoubi",
+                DateOfSale = DateTime.Now,
+                NumberOfProducts = 2,
+                ProductId = product.Id,
+            };
+            _dataContext.Manipulate(_ => _.SalesInvoices.Add(salesInvoice));
+            return salesInvoice;
         }
 
         private static AddSalesInvoiceDto CreateASalesInvoiceForProductWithMaxStock(Product product)
