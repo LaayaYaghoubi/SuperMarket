@@ -53,19 +53,25 @@ namespace SuperMarket.Services.Produccts
         {
             var product = _repository.FindById(id);
             var isIdDuplicate = _repository.IsExistProductId(dto.Id);
-            if (isIdDuplicate && id != dto.Id)
+            if (product == null)
+            {
+                throw new ThereIsNoProductWithThisIdException();
+            }
+            else if (isIdDuplicate && id != dto.Id)
             {
                 throw new DuplicateProductIdException();
             }
-            product.Id = dto.Id;
-            product.MaximumStock = dto.MaximumStock;    
-            product.MinimumStock = dto.MinimumStock;
-            product.Name = dto.Name;
-            product.Price = dto.Price;
-            product.CategoryId = dto.CategoryId;
+                product.Id = dto.Id;
+                product.MaximumStock = dto.MaximumStock;
+                product.MinimumStock = dto.MinimumStock;
+                product.Name = dto.Name;
+                product.Price = dto.Price;
+                product.CategoryId = dto.CategoryId;
 
-            _repository.Update(product);
-            _unitOfWork.Commit();
+                _repository.Update(product);
+                _unitOfWork.Commit();
+            
+           
             
         }
     }

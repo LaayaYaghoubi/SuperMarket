@@ -46,21 +46,20 @@ namespace SuperMarket.Services.Categories
         {
             var category = _repository.FindById(id);
             var isCategoryWithProduct = _repository.IsCategoryWithProduct(id);
-            var isCategoryExist = _repository.IsCategoryExist(id);
-            
+           
             if (isCategoryWithProduct)
             {
                 throw new CategoryContainProductException();
             }
-            if(isCategoryExist)
-            {
-                _repository.Delete(category);
-                _unitOfWork.Commit();
-            }
-            else
+            if (category == null)
             {
                 throw new ThereIsNoCtegoryWithThisIdException();
             }
+
+            _repository.Delete(category);
+                _unitOfWork.Commit();
+            
+           
          
         }
 
@@ -73,21 +72,21 @@ namespace SuperMarket.Services.Categories
         {
             Category category = _repository.FindById(id);
             bool isNameDuplicate = _repository.IsExistCategoryName(dto.Name);
-            var iscategoryexist = _repository.IsCategoryExist(id);
+         
             if (isNameDuplicate)
             {
                 throw new DuplicateCategoryNameException();
             }
-            if(iscategoryexist)
-            {
-                category.Name = dto.Name;
-                _repository.Update(category);
-                _unitOfWork.Commit();
-            }
-            else
+            if (category == null)
             {
                 throw new ThereIsNoCtegoryWithThisIdException();
             }
+
+                category.Name = dto.Name;
+                _repository.Update(category);
+                _unitOfWork.Commit();
+            
+         
         
         }
     }

@@ -33,9 +33,5 @@ namespace SuperMarket.Persistence.EF
         public DbSet<SalesInvoice> SalesInvoices { get; set; }
         public DbSet<PurchaseVoucher> PurchaseVouchers { get; set; }
 
-        public void Manipulate()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

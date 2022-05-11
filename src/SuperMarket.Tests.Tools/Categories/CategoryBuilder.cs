@@ -25,7 +25,7 @@ namespace SuperMarket.Tests.Tools.Categories
             return this;
         }
      
-        public Category Create()
+        public Category CreateCategory()
         {
             return category;
         }

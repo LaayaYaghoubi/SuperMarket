@@ -41,6 +41,11 @@ namespace SuperMarket.Persistence.EF.Products
                   }).ToList();
         }
 
+        public bool IsExistProduct(int id)
+        {
+            return _dataContext.Products.Any(_ => _.Id == id);
+        }
+
         public bool IsExistProductId(int id)
         {
             return _dataContext.Products.Any(_ => _.Id == id); 

@@ -50,7 +50,6 @@ namespace SupertMarket.Services.Test.Unit.Products
             expected.Id.Should().Be(dto.Id);
             expected.MinimumStock.Should().Be(dto.MinimumStock);
             expected.MaximumStock.Should().Be(dto.MaximumStock);
-
         }
 
         [Fact]
@@ -62,9 +61,65 @@ namespace SupertMarket.Services.Test.Unit.Products
             Action expected = () => _sut.Add(newdto);
 
             expected.Should().ThrowExactly<DuplicateProductIdException>();
+        }
+
+        [Fact]
+        public void GetAll_returns_all_products()
+        {
+            Product product = CreateAndAddAProduct();
+
+            var expected = _sut.GetAll();
+
+            expected.Should().HaveCount(1);
+            expected.Should().Contain(_ => _.Name == product.Name);
+            expected.Should().Contain(_ => _.Id == product.Id);
+            expected.Should().Contain(_ => _.CategoryId == product.CategoryId);
+            expected.Should().Contain(_ => _.MinimumStock == product.MinimumStock);
+            expected.Should().Contain(_ => _.MaximumStock == product.MaximumStock);
+        }
+        [Fact]
+        public void Update_updates_products_properly()
+        {
+            var product = CreateAndAddAProduct();
+            UpdateProductDto dto = ChangeCreatedProduct(product);
+
+            _sut.Update(product.Id, dto);
+
+            var expected = _dataContext.Products.FirstOrDefault(_ => _.Id == product.Id);
+
+            expected.Name.Should().Be(dto.Name);
+            expected.Id.Should().Be(dto.Id);
+            expected.Price.Should().Be(dto.Price);
+            expected.MinimumStock.Should().Be(dto.MinimumStock);
+            expected.MaximumStock.Should().Be(dto.MaximumStock);
+            expected.CategoryId.Should().Be(dto.CategoryId);
+        }
+
+        [Fact]
+        public void Update_throws_exception_ThereIsNoProducyWithThisIdException_if_selected_product_doesnt_exist()
+        {
+            int dummyId = 123;
+            var product = CreateAndAddAProduct();
+            UpdateProductDto dto = ChangeCreatedProduct(product);
+
+           Action expected=()=> _sut.Update(dummyId, dto);
+
+            expected.Should().ThrowExactly<ThereIsNoProducyWithThisIdException>();
 
         }
 
+        private static UpdateProductDto ChangeCreatedProduct(Product product)
+        {
+            return new UpdateProductDto()
+            {
+                Name = product.Name,
+                Price = 5000,
+                CategoryId = product.CategoryId,
+                Id = product.Id,
+                MinimumStock = product.MinimumStock,
+                MaximumStock = product.MaximumStock
+            };
+        }
         private static AddProductDto CreateAProductWithSameId(Product product)
         {
             return new AddProductDto()
@@ -77,7 +132,6 @@ namespace SupertMarket.Services.Test.Unit.Products
                 MaximumStock = product.MaximumStock
             };
         }
-
         private Product CreateAndAddAProduct()
         {
             var category = new CategoryBuilder().CreateCategory();
@@ -97,7 +151,6 @@ namespace SupertMarket.Services.Test.Unit.Products
             _dataContext.Manipulate(_ => _.Products.Add(product));
             return product;
         }
-
         private AddProductDto CreateAProduct()
         {
             var category = new CategoryBuilder().CreateCategory();
