@@ -83,6 +83,40 @@ namespace SupertMarket.Services.Test.Unit.PurchaseVouchers
             expected.Should().Contain(_ => _.ExpirationDate == purchaseVoucher.ExpirationDate);
         }
 
+        [Fact]
+        public void Update_updates_purchaseVoucher_properly()
+
+        {
+            Category category = CreateAndAddACategory();
+            Product product = CreateAndAddAProduct(category);
+            PurchaseVoucher purchaseVoucher = CreateAndAddAPurchaseVoucher(product);
+            UpdatePurchaseVoucherDto dto = ChangeCreatedPurchaseVoucher(purchaseVoucher);
+
+            _sut.Update(purchaseVoucher.Id, dto);
+
+            var expected = _dataContext.PurchaseVouchers
+               .FirstOrDefault(_ => _.Id == purchaseVoucher.Id);
+            expected.Name.Should().Be(dto.Name);
+            expected.ProductId.Should().Be(dto.ProductId);
+            expected.DateOfPurchase.Should().Be(dto.DateOfPurchase);
+            expected.NumberOfProducts.Should().Be(dto.NumberOfProducts);
+            expected.TotalPrice.Should().Be(dto.TotalPrice);
+            expected.ExpirationDate.Should().Be(dto.ExpirationDate);
+        }
+
+        private static UpdatePurchaseVoucherDto ChangeCreatedPurchaseVoucher(PurchaseVoucher purchaseVoucher)
+        {
+            return new UpdatePurchaseVoucherDto()
+            {
+                Name = purchaseVoucher.Name,
+                DateOfPurchase = purchaseVoucher.DateOfPurchase,
+                ProductId = purchaseVoucher.ProductId,
+                NumberOfProducts = 30,
+                TotalPrice = 105000,
+                ExpirationDate = DateTime.Parse("2022-05-30T05:21:13.390Z")
+            };
+        }
+
         private PurchaseVoucher CreateAndAddAPurchaseVoucher(Product product)
         {
             PurchaseVoucher purchaseVoucher = new PurchaseVoucher()
@@ -97,7 +131,6 @@ namespace SupertMarket.Services.Test.Unit.PurchaseVouchers
             _dataContext.Manipulate(_ => _.PurchaseVouchers.Add(purchaseVoucher));
             return purchaseVoucher;
         }
-
         private static AddPurchaseVoucherDto CreateAPurchaseVoucherForCreatedProductWithMaximimStockValue(Product product)
         {
             return new AddPurchaseVoucherDto()
