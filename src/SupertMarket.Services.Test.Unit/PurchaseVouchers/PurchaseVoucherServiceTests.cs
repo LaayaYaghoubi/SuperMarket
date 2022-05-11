@@ -115,9 +115,33 @@ namespace SupertMarket.Services.Test.Unit.PurchaseVouchers
             Action expected =()=> _sut.Update(FakeId, dto);
 
             expected.Should().ThrowExactly<ThereIsNoPurchaseVoucherWithThisIdException>();
+        }
+        [Fact]
+        public void Update_Throws_exception_ProductStockReachedMaximumStockException_if_sum_of_number_Of_UpdatedPurchaseVoucher_Products_and_stock_products_becomes_greater_than_maximum_stock()
+        {
 
+            Category category = CreateAndAddACategory();
+            Product product = CreateAndAddAProduct(category);
+            PurchaseVoucher purchaseVoucher = CreateAndAddAPurchaseVoucher(product);
+            UpdatePurchaseVoucherDto dto = ChangeCreatedPurchaseVoucherNumberOfProductsToMax(purchaseVoucher);
+
+            Action expected = () => _sut.Update(purchaseVoucher.Id, dto);
+
+            expected.Should().ThrowExactly<ProductStockReachedMaximumStockException>();
         }
 
+        private static UpdatePurchaseVoucherDto ChangeCreatedPurchaseVoucherNumberOfProductsToMax(PurchaseVoucher purchaseVoucher)
+        {
+            return new UpdatePurchaseVoucherDto()
+            {
+                Name = purchaseVoucher.Name,
+                DateOfPurchase = purchaseVoucher.DateOfPurchase,
+                ProductId = purchaseVoucher.ProductId,
+                NumberOfProducts = 50,
+                TotalPrice = 105000,
+                ExpirationDate = DateTime.Parse("2022-05-30T05:21:13.390Z")
+            };
+        }
         private static UpdatePurchaseVoucherDto ChangeCreatedPurchaseVoucher(PurchaseVoucher purchaseVoucher)
         {
             return new UpdatePurchaseVoucherDto()
