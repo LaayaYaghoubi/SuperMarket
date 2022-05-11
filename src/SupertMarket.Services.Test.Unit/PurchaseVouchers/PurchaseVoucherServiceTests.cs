@@ -103,6 +103,20 @@ namespace SupertMarket.Services.Test.Unit.PurchaseVouchers
             expected.TotalPrice.Should().Be(dto.TotalPrice);
             expected.ExpirationDate.Should().Be(dto.ExpirationDate);
         }
+        [Fact]
+        public void Update_Throws_exception_ThereIsNoPurchaseVoucherWithThisIdException_if_selected_voucher_does_not_exist()
+        {
+            int FakeId = 345;
+            Category category = CreateAndAddACategory();
+            Product product = CreateAndAddAProduct(category);
+            PurchaseVoucher purchaseVoucher = CreateAndAddAPurchaseVoucher(product);
+            UpdatePurchaseVoucherDto dto = ChangeCreatedPurchaseVoucher(purchaseVoucher);
+
+            Action expected =()=> _sut.Update(FakeId, dto);
+
+            expected.Should().ThrowExactly<ThereIsNoPurchaseVoucherWithThisIdException>();
+
+        }
 
         private static UpdatePurchaseVoucherDto ChangeCreatedPurchaseVoucher(PurchaseVoucher purchaseVoucher)
         {
@@ -116,7 +130,6 @@ namespace SupertMarket.Services.Test.Unit.PurchaseVouchers
                 ExpirationDate = DateTime.Parse("2022-05-30T05:21:13.390Z")
             };
         }
-
         private PurchaseVoucher CreateAndAddAPurchaseVoucher(Product product)
         {
             PurchaseVoucher purchaseVoucher = new PurchaseVoucher()

@@ -55,7 +55,12 @@ namespace SuperMarket.Services.PurchaseVouchers
         public void Update(int id, UpdatePurchaseVoucherDto dto)
         {
             var purchaseVoucher = _repository.FindVoucherById(id);
-           
+
+            if(purchaseVoucher == null)
+            {
+                throw new ThereIsNoPurchaseVoucherWithThisIdException();
+            }
+         
             purchaseVoucher.Name = dto.Name;
             purchaseVoucher.TotalPrice = dto.TotalPrice;
             purchaseVoucher.NumberOfProducts = dto.NumberOfProducts;    
@@ -67,11 +72,10 @@ namespace SuperMarket.Services.PurchaseVouchers
             product.Stock = product.Stock + dto.NumberOfProducts;
             product.ExpirationDate = dto.ExpirationDate;
 
-            if (product.Stock >= product.MaximumStock)
+              if (product.Stock >= product.MaximumStock)
             {
                 throw new ProductStockReachedMaximumStockException();
             }
-
             _repository.Update(purchaseVoucher);
             _repository.UpdateProduct(product);
             _unitOfWork.Commit();
