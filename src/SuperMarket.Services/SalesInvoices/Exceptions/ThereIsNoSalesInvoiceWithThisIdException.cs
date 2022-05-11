@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SuperMarket.Services.SalesInvoices.Exceptions
 {
-    internal class ThereIsNoSalesInvoiceWithThisIdException
+    public class ThereIsNoSalesInvoiceWithThisIdException : Exception
     {
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SuperMarket.Services.PurchaseVouchers.Exceptions
 {
-    internal class ThereIsNoPurchaseVoucherWithThisIdException
+    public class ThereIsNoPurchaseVoucherWithThisIdException : Exception
     {
     }
 }

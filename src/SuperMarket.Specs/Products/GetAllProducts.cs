@@ -31,7 +31,8 @@ namespace SuperMarket.Specs.Products
         private ProductRepository _repository;
         private ProductService _sut;
         private IList<GetAllProductsDto> expected;
-        public GetAllProducts(ConfigurationFixture configuration) : base(configuration)
+        public GetAllProducts(ConfigurationFixture configuration)
+            : base(configuration)
         {
             _dataContext = CreateDataContext();
             _unitOfWork = new EFUnitOfWork(_dataContext);

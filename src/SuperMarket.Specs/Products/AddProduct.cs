@@ -30,7 +30,8 @@ namespace SuperMarket.Specs.Products
         private ProductRepository _repository;
         private ProductService _sut;
 
-        public AddProduct(ConfigurationFixture configuration) : base(configuration)
+        public AddProduct(ConfigurationFixture configuration)
+            : base(configuration)
         {
             _dataContext = CreateDataContext();
             _unitOfWork = new EFUnitOfWork(_dataContext);

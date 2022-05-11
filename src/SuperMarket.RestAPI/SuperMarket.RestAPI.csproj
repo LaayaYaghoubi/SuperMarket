@@ -15,12 +15,6 @@
 
 
 	<ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-	
-
-
-	<ItemGroup>
 	  <ProjectReference Include="..\SuperMarket.Infrastructure\SuperMarket.Infrastructure.csproj" />
 	  <ProjectReference Include="..\SuperMarket.Persistence.EF\SuperMarket.Persistence.EF.csproj" />
 	  <ProjectReference Include="..\SuperMarket.Services\SuperMarket.Services.csproj" />

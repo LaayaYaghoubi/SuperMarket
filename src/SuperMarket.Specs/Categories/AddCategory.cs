@@ -26,7 +26,8 @@ namespace SuperMarket.Specs.Categories
         private CategoryRepository _categoryRepository;
         private CategoryService _sut;
         
-        public AddCategory(ConfigurationFixture configuration) : base(configuration)
+        public AddCategory(ConfigurationFixture configuration) 
+            : base(configuration)
         {
             _dataContext = CreateDataContext();
             _unitOfWork = new EFUnitOfWork(_dataContext);

@@ -9,11 +9,7 @@ using SuperMarket.Persistence.EF.Products;
 using SuperMarket.Services.Produccts;
 using SuperMarket.Services.Produccts.Contracts;
 using SuperMarket.Services.Products.Contracts;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 using static BookStore.Specs.BDDHelper;
 
@@ -36,7 +32,8 @@ namespace SuperMarket.Specs.Products
         private ProductService _sut;
 
 
-        public UpdateProduct(ConfigurationFixture configuration) : base(configuration)
+        public UpdateProduct(ConfigurationFixture configuration)
+            : base(configuration)
         {
             _dataContext = CreateDataContext();
             _unitOfWork = new EFUnitOfWork(_dataContext);

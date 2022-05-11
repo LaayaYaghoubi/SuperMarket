@@ -11,10 +11,7 @@ using SuperMarket.Services.Produccts.Contracts;
 using SuperMarket.Services.Produccts.Exceptions;
 using SuperMarket.Services.Products.Contracts;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 using static BookStore.Specs.BDDHelper;
 

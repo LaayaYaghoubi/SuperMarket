@@ -32,7 +32,8 @@ namespace SuperMarket.Specs.Categories
         private CategoryRepository _categoryRepository;
         private CategoryService _sut;
 
-        public DeleteCategory(ConfigurationFixture configuration) : base(configuration)
+        public DeleteCategory(ConfigurationFixture configuration)
+            : base(configuration)
         {
             _dataContext = CreateDataContext();
             _unitOfWork = new EFUnitOfWork(_dataContext);
