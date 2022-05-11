@@ -7,6 +7,7 @@ using SuperMarket.Persistence.EF;
 using SuperMarket.Persistence.EF.Products;
 using SuperMarket.Services.Produccts;
 using SuperMarket.Services.Produccts.Contracts;
+using SuperMarket.Services.Produccts.Exceptions;
 using SuperMarket.Services.Products.Contracts;
 using SuperMarket.Tests.Tools.Categories;
 using SuperMarket.Tests.Tools.Products;
@@ -50,6 +51,51 @@ namespace SupertMarket.Services.Test.Unit.Products
             expected.MinimumStock.Should().Be(dto.MinimumStock);
             expected.MaximumStock.Should().Be(dto.MaximumStock);
 
+        }
+
+        [Fact]
+        public void Add_throws_DuplicateProductIdException_if_new_product_id_is_duplicated()
+        {
+            Product product = CreateAndAddAProduct();
+            AddProductDto newdto = CreateAProductWithSameId(product);
+
+            Action expected = () => _sut.Add(newdto);
+
+            expected.Should().ThrowExactly<DuplicateProductIdException>();
+
+        }
+
+        private static AddProductDto CreateAProductWithSameId(Product product)
+        {
+            return new AddProductDto()
+            {
+                Name = "butter",
+                Price = 3400,
+                CategoryId = product.CategoryId,
+                Id = product.Id,
+                MinimumStock = product.MinimumStock,
+                MaximumStock = product.MaximumStock
+            };
+        }
+
+        private Product CreateAndAddAProduct()
+        {
+            var category = new CategoryBuilder().CreateCategory();
+            _dataContext.Manipulate(_ => _.Categories.Add(category));
+            var product = new ProductBuilder()
+                .WithCategoryId(category.Id).
+                CreateProduct();
+            AddProductDto dto = new AddProductDto()
+            {
+                Name = product.Name,
+                Price = product.Price,
+                CategoryId = product.CategoryId,
+                Id = product.Id,
+                MinimumStock = product.MinimumStock,
+                MaximumStock = product.MaximumStock
+            };
+            _dataContext.Manipulate(_ => _.Products.Add(product));
+            return product;
         }
 
         private AddProductDto CreateAProduct()
