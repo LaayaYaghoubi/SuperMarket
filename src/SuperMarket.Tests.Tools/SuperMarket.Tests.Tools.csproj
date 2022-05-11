@@ -8,4 +8,9 @@
     <ProjectReference Include="..\SuperMarket.Entities\SuperMarket.Entities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="SalesInvoices\" />
+    <Folder Include="PurchaseVouchers\" />
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SuperMarket.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,5 +31,4 @@ namespace SuperMarket.Tests.Tools.Categories
         }
     }
 
-}
 }

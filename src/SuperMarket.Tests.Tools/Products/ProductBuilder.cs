@@ -1,16 +1,15 @@
 ﻿using SuperMarket.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SuperMarket.Tests.Tools.Products
 {
     public class ProductBuilder
     {
         Product product = new Product();
-        Category category = new Category();
+        Category category = new Category()
+        {
+            Name = "Dairy"
+        };
         public ProductBuilder()
         {
             product = new Product()
@@ -63,6 +62,11 @@ namespace SuperMarket.Tests.Tools.Products
             product.CategoryId = categoryId;
             return this;
         }
+        public ProductBuilder WithCategoryName(string name)
+        {
+            product.Category.Name = name;
+            return this;
+        }
         public ProductBuilder WithPurchaseVoucher(decimal totalPrice, 
             int numberOfProducts, DateTime expirationDate)
         {
@@ -90,6 +94,10 @@ namespace SuperMarket.Tests.Tools.Products
                 DateOfSale = DateTime.Now
             };
             return this;
+        }
+        public Product CreateProduct()
+        {
+            return product;
         }
     }
 
