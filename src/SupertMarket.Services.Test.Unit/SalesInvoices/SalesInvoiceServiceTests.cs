@@ -5,6 +5,7 @@ using SuperMarket.Infrastructure.Application;
 using SuperMarket.Infrastructure.Test;
 using SuperMarket.Persistence.EF;
 using SuperMarket.Persistence.EF.SalesInvoices;
+using SuperMarket.Services.PurchaseVouchers.Exceptions;
 using SuperMarket.Services.SalesInvoices;
 using SuperMarket.Services.SalesInvoices.Contracts;
 using SuperMarket.Services.SalesInvoices.Exceptions;
@@ -78,7 +79,19 @@ namespace SupertMarket.Services.Test.Unit.SalesInvoices
             expected.DateOfSale.Should().Be(dto.DateOfSale);
             expected.TotalPrice.Should().Be(dto.TotalPrice);
         }
+        [Fact]
+        public void update_throws_exception_ThereIsNoPurchaseVoucherWithThisIdException_when_selected_invoice_does_not_exist()
+        {
+            int FakeId = 1234;
+            Product product = CreateAndAddAProduct();
+            SalesInvoice salesInvoice = CreateAndAddAsalesInvoice(product);
+            UpdateSalesInvoiceDto dto = ChangeCreatedSalesInvoice(salesInvoice);
 
+          Action expected =()=>  _sut.Update(FakeId, dto);
+
+            expected.Should().ThrowExactly<ThereIsNoPurchaseVoucherWithThisIdException>();
+
+        }
         private static UpdateSalesInvoiceDto ChangeCreatedSalesInvoice(SalesInvoice salesInvoice)
         {
             return new UpdateSalesInvoiceDto()
@@ -90,7 +103,6 @@ namespace SupertMarket.Services.Test.Unit.SalesInvoices
                 ProductId = salesInvoice.ProductId,
             };
         }
-
         private SalesInvoice CreateAndAddAsalesInvoice(Product product)
         {
             SalesInvoice salesInvoice = new SalesInvoice()
@@ -104,7 +116,6 @@ namespace SupertMarket.Services.Test.Unit.SalesInvoices
             _dataContext.Manipulate(_ => _.SalesInvoices.Add(salesInvoice));
             return salesInvoice;
         }
-
         private static AddSalesInvoiceDto CreateASalesInvoiceForProductWithMaxStock(Product product)
         {
             return new AddSalesInvoiceDto()

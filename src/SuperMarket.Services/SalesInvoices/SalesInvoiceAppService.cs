@@ -1,5 +1,6 @@
 ﻿using SuperMarket.Entities;
 using SuperMarket.Infrastructure.Application;
+using SuperMarket.Services.PurchaseVouchers.Exceptions;
 using SuperMarket.Services.SalesInvoices.Contracts;
 using SuperMarket.Services.SalesInvoices.Exceptions;
 using System;
@@ -67,6 +68,10 @@ namespace SuperMarket.Services.SalesInvoices
         public void Update(int id ,UpdateSalesInvoiceDto dto)
         {
             var salesInvoice = _repository.FindInvoiceById(id);
+            if(salesInvoice == null)
+            {
+                throw new ThereIsNoPurchaseVoucherWithThisIdException();
+            }
 
             salesInvoice.NumberOfProducts = dto.NumberOfProducts;
             salesInvoice.DateOfSale = dto.DateOfSale;
