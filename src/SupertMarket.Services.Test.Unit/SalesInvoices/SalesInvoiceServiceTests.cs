@@ -7,6 +7,7 @@ using SuperMarket.Persistence.EF;
 using SuperMarket.Persistence.EF.SalesInvoices;
 using SuperMarket.Services.SalesInvoices;
 using SuperMarket.Services.SalesInvoices.Contracts;
+using SuperMarket.Services.SalesInvoices.Exceptions;
 using SuperMarket.Tests.Tools.Categories;
 using SuperMarket.Tests.Tools.Products;
 using System;
@@ -48,10 +49,30 @@ namespace SupertMarket.Services.Test.Unit.SalesInvoices
             expected.ProductId.Should().Be(dto.ProductId);
             expected.DateOfSale.Should().Be(dto.DateOfSale);
             expected.TotalPrice.Should().Be(dto.TotalPrice);
+        }
+        [Fact]
+        public void Add_throws_exception_ProductStockReachedMinimumStockException_if_salesinvoiceproducts_reach_minstock_product()
+        {
+            Product product = CreateAndAddAProduct();
+            AddSalesInvoiceDto dto = CreateASalesInvoiceForProductWithMaxStock(product);
 
+            Action expected = () => _sut.Add(dto);
+
+            expected.Should().ThrowExactly<ProductStockReachedMinimumStockException>();
 
         }
 
+        private static AddSalesInvoiceDto CreateASalesInvoiceForProductWithMaxStock(Product product)
+        {
+            return new AddSalesInvoiceDto()
+            {
+                ClientName = "MrChenari",
+                DateOfSale = DateTime.Now,
+                NumberOfProducts = 50,
+                TotalPrice = 7000,
+                ProductId = product.Id,
+            };
+        }
         private static AddSalesInvoiceDto CreateASalesInvoiceForCreatedProduct(Product product)
         {
             return new AddSalesInvoiceDto()
@@ -63,7 +84,6 @@ namespace SupertMarket.Services.Test.Unit.SalesInvoices
                 ProductId = product.Id,
             };
         }
-
         private Product CreateAndAddAProduct()
         {
             Category category = new CategoryBuilder().CreateCategory();
