@@ -132,7 +132,6 @@ namespace SupertMarket.Services.Test.Unit.Products
                 MaximumStock = Secondproduct.MaximumStock
             };
         }
-
         private Product CreateAndAddASecondProduct(Product product)
         {
             var Secondproduct = new ProductBuilder().
@@ -141,7 +140,6 @@ namespace SupertMarket.Services.Test.Unit.Products
             _dataContext.Manipulate(_ => _.Products.Add(Secondproduct));
             return Secondproduct;
         }
-
         private static UpdateProductDto ChangeCreatedProduct(Product product)
         {
             return new UpdateProductDto()
