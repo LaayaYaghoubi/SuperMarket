@@ -135,7 +135,6 @@ namespace SupertMarket.Services.Test.Unit.SalesInvoices
             _dataContext.SalesInvoices.Should().NotContain(_ => _.ProductId == salesInvoice.ProductId);
             var expectedProduct = _dataContext.Products.FirstOrDefault(_ => _.Id == salesInvoice.ProductId);
             expectedProduct.Stock.Should().Be(product.Stock);
-
         }
 
         private static UpdateSalesInvoiceDto ChangeCreatedSaleInvoiceToMax(SalesInvoice salesInvoice)
