@@ -97,14 +97,30 @@ namespace SupertMarket.Services.Test.Unit.SalesInvoices
 
             Product product = CreateAndAddAProduct();
             SalesInvoice salesInvoice = CreateAndAddAsalesInvoice(product);
-            UpdateSalesInvoiceDto dto = ChangeCreatedSaleInvoiceToMaxstock(salesInvoice);
+            UpdateSalesInvoiceDto dto = ChangeCreatedSaleInvoiceToMax(salesInvoice);
 
             Action expected = () => _sut.Update(salesInvoice.Id, dto);
 
             expected.Should().ThrowExactly<ProductStockReachedMinimumStockException>();
         }
 
-        private static UpdateSalesInvoiceDto ChangeCreatedSaleInvoiceToMaxstock(SalesInvoice salesInvoice)
+        [Fact]
+        public void GetAll_returns_all_salesinvoices()
+        {
+            Product product = CreateAndAddAProduct();
+            SalesInvoice salesInvoice = CreateAndAddAsalesInvoice(product);
+
+            var expected =_sut.GetAll();
+
+            expected.Should().HaveCount(1);
+            expected.Should().Contain(_ => _.ClientName == salesInvoice.ClientName);
+            expected.Should().Contain(_ => _.ProductId == salesInvoice.ProductId);
+            expected.Should().Contain(_ => _.NumberOfProducts == salesInvoice.NumberOfProducts);
+            expected.Should().Contain(_ => _.TotalPrice == salesInvoice.TotalPrice);
+            expected.Should().Contain(_ => _.DateOfSale == salesInvoice.DateOfSale);
+        }
+
+        private static UpdateSalesInvoiceDto ChangeCreatedSaleInvoiceToMax(SalesInvoice salesInvoice)
         {
             return new UpdateSalesInvoiceDto()
             {
@@ -115,7 +131,6 @@ namespace SupertMarket.Services.Test.Unit.SalesInvoices
                 ProductId = salesInvoice.ProductId,
             };
         }
-
         private static UpdateSalesInvoiceDto ChangeCreatedSalesInvoice(SalesInvoice salesInvoice)
         {
             return new UpdateSalesInvoiceDto()
