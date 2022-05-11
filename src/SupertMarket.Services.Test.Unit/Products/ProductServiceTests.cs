@@ -94,18 +94,52 @@ namespace SupertMarket.Services.Test.Unit.Products
             expected.MaximumStock.Should().Be(dto.MaximumStock);
             expected.CategoryId.Should().Be(dto.CategoryId);
         }
-
+       
         [Fact]
         public void Update_throws_exception_ThereIsNoProducyWithThisIdException_if_selected_product_doesnt_exist()
         {
-            int dummyId = 123;
+            int FakeId = 123;
             var product = CreateAndAddAProduct();
             UpdateProductDto dto = ChangeCreatedProduct(product);
 
-           Action expected=()=> _sut.Update(dummyId, dto);
+           Action expected=()=> _sut.Update(FakeId, dto);
 
-            expected.Should().ThrowExactly<ThereIsNoProducyWithThisIdException>();
+            expected.Should().ThrowExactly<ThereIsNoProductWithThisIdException>();
+        }
 
+        [Fact]
+        public void Update_throws_exception_DuplicateProductIdException_if_changed_product_id_is_duplicated()
+        {
+
+            var product = CreateAndAddAProduct();
+            Product Secondproduct = CreateAndAddASecondProduct(product);
+            UpdateProductDto dto = ChangeSecondProductIdToProductId(product, Secondproduct);
+
+            Action expected = () => _sut.Update(Secondproduct.Id, dto);
+
+            expected.Should().ThrowExactly<DuplicateProductIdException>();
+        }
+
+        private static UpdateProductDto ChangeSecondProductIdToProductId(Product product, Product Secondproduct)
+        {
+            return new UpdateProductDto()
+            {
+                Name = Secondproduct.Name,
+                Price = 5000,
+                CategoryId = Secondproduct.CategoryId,
+                Id = product.Id,
+                MinimumStock = Secondproduct.MinimumStock,
+                MaximumStock = Secondproduct.MaximumStock
+            };
+        }
+
+        private Product CreateAndAddASecondProduct(Product product)
+        {
+            var Secondproduct = new ProductBuilder().
+                WithName("KaleMilk").WithCategoryId(product.CategoryId).
+                WithId(109).CreateProduct();
+            _dataContext.Manipulate(_ => _.Products.Add(Secondproduct));
+            return Secondproduct;
         }
 
         private static UpdateProductDto ChangeCreatedProduct(Product product)
@@ -139,15 +173,6 @@ namespace SupertMarket.Services.Test.Unit.Products
             var product = new ProductBuilder()
                 .WithCategoryId(category.Id).
                 CreateProduct();
-            AddProductDto dto = new AddProductDto()
-            {
-                Name = product.Name,
-                Price = product.Price,
-                CategoryId = product.CategoryId,
-                Id = product.Id,
-                MinimumStock = product.MinimumStock,
-                MaximumStock = product.MaximumStock
-            };
             _dataContext.Manipulate(_ => _.Products.Add(product));
             return product;
         }

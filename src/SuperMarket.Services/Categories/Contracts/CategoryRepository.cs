@@ -17,6 +17,6 @@ namespace SuperMarket.Services.Categories.Contracts
         IList<GetCategoryDto> GetAll();
         void Delete(Category category);
         bool IsCategoryWithProduct(int id);
-        bool IsCategoryExist(int id);
+       
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SuperMarket.Services.Produccts.Exceptions
 {
-    public class ThereIsNoProducyWithThisIdException : Exception
+    public class ThereIsNoProductWithThisIdException : Exception
     {
     }
 }

@@ -22,7 +22,7 @@ namespace SuperMarket.Tests.Tools.Products
                 MinimumStock = 10,
             };
         }
-        public ProductBuilder WittId(int id)
+        public ProductBuilder WithId(int id)
         {
             product.Id = id;
             return this;
