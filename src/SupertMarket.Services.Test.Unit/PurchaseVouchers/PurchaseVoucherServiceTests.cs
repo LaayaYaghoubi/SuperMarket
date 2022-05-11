@@ -17,7 +17,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace SupertMarket.Services.Test.Unit.PurchaseVoucher
+namespace SupertMarket.Services.Test.Unit.PurchaseVouchers
 {
     public class PurchaseVoucherServiceTests
     {
@@ -64,6 +64,40 @@ namespace SupertMarket.Services.Test.Unit.PurchaseVoucher
             expected.Should().ThrowExactly<ProductStockReachedMaximumStockException>();
         }
 
+        [Fact]
+        public void GetAll_returns_all_purchase_vouchers_properly()
+        {
+            Category category = CreateAndAddACategory();
+            Product product = CreateAndAddAProduct(category);
+            PurchaseVoucher purchaseVoucher = CreateAndAddAPurchaseVoucher(product);
+
+            var expected = _sut.GetAll();
+
+            expected.Should().HaveCount(1);
+            expected.Should().Contain(_ => _.Name == purchaseVoucher.Name);
+            expected.Should().Contain(_ => _.Id == purchaseVoucher.Id);
+            expected.Should().Contain(_ => _.ProductId == purchaseVoucher.ProductId);
+            expected.Should().Contain(_ => _.NumberOfProducts == purchaseVoucher.NumberOfProducts);
+            expected.Should().Contain(_ => _.TotalPrice == purchaseVoucher.TotalPrice);
+            expected.Should().Contain(_ => _.DateOfPurchase == purchaseVoucher.DateOfPurchase);
+            expected.Should().Contain(_ => _.ExpirationDate == purchaseVoucher.ExpirationDate);
+        }
+
+        private PurchaseVoucher CreateAndAddAPurchaseVoucher(Product product)
+        {
+            PurchaseVoucher purchaseVoucher = new PurchaseVoucher()
+            {
+                Name = product.Name,
+                ProductId = product.Id,
+                DateOfPurchase = DateTime.Now,
+                ExpirationDate = DateTime.Parse("2022-05-27T05:21:13.390Z"),
+                NumberOfProducts = 2,
+                TotalPrice = 7000,
+            };
+            _dataContext.Manipulate(_ => _.PurchaseVouchers.Add(purchaseVoucher));
+            return purchaseVoucher;
+        }
+
         private static AddPurchaseVoucherDto CreateAPurchaseVoucherForCreatedProductWithMaximimStockValue(Product product)
         {
             return new AddPurchaseVoucherDto()
@@ -76,7 +110,6 @@ namespace SupertMarket.Services.Test.Unit.PurchaseVoucher
                 TotalPrice = 175000,
             };
         }
-
         private static AddPurchaseVoucherDto CreateAPurchaseVoucherForCreatedProduct(Product product)
         {
             return new AddPurchaseVoucherDto()
