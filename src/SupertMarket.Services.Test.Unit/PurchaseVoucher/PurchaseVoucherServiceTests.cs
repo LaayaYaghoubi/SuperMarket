@@ -7,6 +7,7 @@ using SuperMarket.Persistence.EF;
 using SuperMarket.Persistence.EF.PurchaseVouchers;
 using SuperMarket.Services.PurchaseVouchers;
 using SuperMarket.Services.PurchaseVouchers.Contracts;
+using SuperMarket.Services.PurchaseVouchers.Exceptions;
 using SuperMarket.Tests.Tools.Categories;
 using SuperMarket.Tests.Tools.Products;
 using System;
@@ -50,6 +51,30 @@ namespace SupertMarket.Services.Test.Unit.PurchaseVoucher
             expected.DateOfPurchase.Should().Be(dto.DateOfPurchase);
             expected.Product.Stock.Should().Be(product.Stock);
             expected.Product.ExpirationDate.Should().Be(dto.ExpirationDate);
+        }
+        [Fact]
+        public void Add_throws_exception_ProductStockReachedMaximumStockException_if_sum_of_number_Of_PurchaseVoucher_Products_and_stock_products_becomes_greater_than_maximum_stock()
+        {
+            Category category = CreateAndAddACategory();
+            Product product = CreateAndAddAProduct(category);
+            AddPurchaseVoucherDto dto = CreateAPurchaseVoucherForCreatedProductWithMaximimStockValue(product);
+
+            Action expected = () => _sut.Add(dto);
+
+            expected.Should().ThrowExactly<ProductStockReachedMaximumStockException>();
+        }
+
+        private static AddPurchaseVoucherDto CreateAPurchaseVoucherForCreatedProductWithMaximimStockValue(Product product)
+        {
+            return new AddPurchaseVoucherDto()
+            {
+                Name = product.Name,
+                ProductId = product.Id,
+                DateOfPurchase = DateTime.Now,
+                ExpirationDate = DateTime.Parse("2022-05-27T05:21:13.390Z"),
+                NumberOfProducts = 50,
+                TotalPrice = 175000,
+            };
         }
 
         private static AddPurchaseVoucherDto CreateAPurchaseVoucherForCreatedProduct(Product product)

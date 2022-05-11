@@ -19,7 +19,7 @@ namespace SuperMarket.Tests.Tools.Products
                 Price = 3400,
                 CategoryId = category.Id,
                 MaximumStock = 50,
-                MinimumStock = 10,
+                MinimumStock = 2,
             };
         }
         public ProductBuilder WithId(int id)
