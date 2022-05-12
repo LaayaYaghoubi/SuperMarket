@@ -70,7 +70,7 @@ namespace SuperMarket.Specs.SalesInvoices
                 Name = "شیر کاله",
                 Price = 3500,
                 CategoryId = _category.Id,
-                Id = 101,
+                Code = 101,
                 MinimumStock = 1,
                 MaximumStock = 100,
                 Stock = 4
@@ -118,7 +118,7 @@ namespace SuperMarket.Specs.SalesInvoices
             var expectedProduct = _dataContext.Products.
                   FirstOrDefault(_ => _.Id == _dto.ProductId);
             expectedProduct.Name.Should().Be(_product.Name);
-            expectedProduct.Id.Should().Be(_product.Id);
+            expectedProduct.Code.Should().Be(_product.Code);
             expectedProduct.CategoryId.Should().Be(_product.CategoryId);
             expectedProduct.MinimumStock.Should().Be(_product.MinimumStock);
             expectedProduct.MaximumStock.Should().Be(_product.MaximumStock);

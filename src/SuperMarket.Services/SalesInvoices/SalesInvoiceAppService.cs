@@ -31,7 +31,7 @@ namespace SuperMarket.Services.SalesInvoices
             {
                ClientName = dto.ClientName, 
                ProductId = dto.ProductId,
-               NumberOfProducts = dto.NumberOfProducts,
+               Count = dto.NumberOfProducts,
                TotalPrice = dto.TotalPrice,
                DateOfSale = dto.DateOfSale,
             };
@@ -54,7 +54,7 @@ namespace SuperMarket.Services.SalesInvoices
         {
             var salesInvoice = _repository.FindInvoiceById(id);
             var product = _repository.FindProductById(salesInvoice.ProductId);
-            product.Stock = product.Stock + salesInvoice.NumberOfProducts;
+            product.Stock = product.Stock + salesInvoice.Count;
             _repository.Delete(salesInvoice);
             _repository.UpdateProduct(product);
             _unitOfWork.Commit();
@@ -73,7 +73,7 @@ namespace SuperMarket.Services.SalesInvoices
                 throw new ThereIsNoPurchaseVoucherWithThisIdException();
             }
 
-            salesInvoice.NumberOfProducts = dto.NumberOfProducts;
+            salesInvoice.Count = dto.NumberOfProducts;
             salesInvoice.DateOfSale = dto.DateOfSale;
             salesInvoice.ClientName = dto.ClientName;
             salesInvoice.ProductId = dto.ProductId;

@@ -28,8 +28,6 @@ namespace SuperMarket.Specs.Categories
         private CategoryService _sut;
         private Category _category;
         IList<GetCategoryDto> expected;
-
-
         public GetAllCategories(ConfigurationFixture configuration)
             : base(configuration)
         {
@@ -38,23 +36,16 @@ namespace SuperMarket.Specs.Categories
             _categoryRepository = new EFCategoryRepository(_dataContext);
             _sut = new CategoryAppService(_categoryRepository, _unitOfWork);
         }
-
         [Given(": دسته بندی با عنوان 'لبنیات' در فهرست دسته بندی کالا وجود داشته باشد.")]
         public void Given()
         {
-            _category = new Category()
-            {
-                Name = "لبنیات"
-            };
-            _dataContext.Manipulate(_ => _.Categories.Add(_category));
+            AddACategory();
         }
-
         [When("درخواست مشاهده فهرست دسته بندی کالاها را می دهم")]
         public void When()
         {
           expected = _sut.GetAll();
         }
-
         [Then("فهرست دسته بندی کالا ها با عنوان ‘لبنیات’ نمایش داده می شود.")]
         public void Then()
         {
@@ -62,13 +53,20 @@ namespace SuperMarket.Specs.Categories
             expected.Should().Contain(_ => _.Name == _category.Name);
 
         }
-
         [Fact]
         public void Run()
         {
             Given();
             When();
             Then();
+        }
+        private void AddACategory()
+        {
+            _category = new Category()
+            {
+                Name = "لبنیات"
+            };
+            _dataContext.Manipulate(_ => _.Categories.Add(_category));
         }
     }
 }

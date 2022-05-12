@@ -44,12 +44,7 @@ namespace SuperMarket.Specs.PurchaseVouchers
         [Given("دسته بندی با عنوان ‘ لبنیات’ در  فهرست دسته بندی کالاها وجود دارد")]
         public void Given()
         {
-            _category = new Category()
-            {
-                Name = "لبنیات"
-            };
-
-            _dataContext.Manipulate(_ => _.Categories.Add(_category));
+            AddACategory();
         }
 
         [And("کالایی با با عنوان ‘شیرکاله’" +
@@ -63,17 +58,7 @@ namespace SuperMarket.Specs.PurchaseVouchers
 
         public void And()
         {
-            _product = new Product()
-            {
-                Name = "شیر کاله",
-                Price = 3500,
-                CategoryId = _category.Id,
-                Id = 101,
-                MinimumStock = 1,
-                MaximumStock = 100,
-                Stock = 4
-            };
-            _dataContext.Manipulate(_ => _.Products.Add(_product));
+            AddAProduct();
         }
 
 
@@ -87,16 +72,7 @@ namespace SuperMarket.Specs.PurchaseVouchers
 
         public void AndGiven()
         {
-            _purchaseVoucher = new PurchaseVoucher()
-            {
-                Name = "خرید شیر کاله",
-                DateOfPurchase = DateTime.Now,
-                ProductId = _product.Id,
-                NumberOfProducts = 20,
-                TotalPrice = 70000,
-                ExpirationDate = DateTime.Parse("2022-05-27T05:21:13.390Z")
-            };
-            _dataContext.Manipulate(_ => _.PurchaseVouchers.Add(_purchaseVoucher));
+            AddAPurchaseVoucher();
         }
 
         [When("سند ورود کالا با عنوان سند ‘ خرید شیر کاله’" +
@@ -114,18 +90,24 @@ namespace SuperMarket.Specs.PurchaseVouchers
 
         public void When()
         {
-            _dto = new UpdatePurchaseVoucherDto()
-            {
-              
-                Name = _purchaseVoucher.Name,
-                DateOfPurchase =_purchaseVoucher.DateOfPurchase,
-                ProductId = _product.Id,
-                NumberOfProducts = 30,
-                TotalPrice = 105000,
-                ExpirationDate = DateTime.Parse("2022-05-30T05:21:13.390Z")
-            };
+            ChangeCreatedCategory();
             _sut.Update(_purchaseVoucher.Id, _dto);
         }
+
+        private void ChangeCreatedCategory()
+        {
+            _dto = new UpdatePurchaseVoucherDto()
+            {
+
+                Name = _purchaseVoucher.Name,
+                DateOfPurchase = _purchaseVoucher.DateOfPurchase,
+                ProductId = _product.Id,
+                Count = 30,
+                TotalPrice = 105000,
+
+            };
+        }
+
         [Then("سند ورود کالا با" +
             "عنوان سند ‘ خرید شیر کاله’" +
             "  و تاریخ انقضا کالا ‘ 2022-05-30 " +
@@ -142,9 +124,9 @@ namespace SuperMarket.Specs.PurchaseVouchers
             expected.Name.Should().Be(_dto.Name);
             expected.ProductId.Should().Be(_dto.ProductId); 
             expected.DateOfPurchase.Should().Be(_dto.DateOfPurchase);   
-            expected.NumberOfProducts.Should().Be(_dto.NumberOfProducts);   
+            expected.Count.Should().Be(_dto.Count);   
             expected.TotalPrice.Should().Be(_dto.TotalPrice);   
-            expected.ExpirationDate.Should().Be(_dto.ExpirationDate);
+          
         }
 
         [Fact]
@@ -156,6 +138,44 @@ namespace SuperMarket.Specs.PurchaseVouchers
             When();
             Then();
         }
+        private void AddACategory()
+        {
+            _category = new Category()
+            {
+                Name = "لبنیات"
+            };
+
+            _dataContext.Manipulate(_ => _.Categories.Add(_category));
+        }
+        private void AddAProduct()
+        {
+            _product = new Product()
+            {
+                Name = "شیر کاله",
+                Price = 3500,
+                CategoryId = _category.Id,
+                Code = 101,
+                MinimumStock = 1,
+                MaximumStock = 100,
+                Stock = 4
+            };
+            _dataContext.Manipulate(_ => _.Products.Add(_product));
+        }
+        private void AddAPurchaseVoucher()
+        {
+            _purchaseVoucher = new PurchaseVoucher()
+            {
+                Name = "خرید شیر کاله",
+                DateOfPurchase = DateTime.Now,
+                ProductId = _product.Id,
+                Count = 20,
+                TotalPrice = 70000,
+
+            };
+            _dataContext.Manipulate(_ => _.PurchaseVouchers.Add(_purchaseVoucher));
+        }
+
+
 
     }
 }

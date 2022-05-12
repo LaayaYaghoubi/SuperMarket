@@ -11,7 +11,7 @@ namespace SuperMarket.Services.SalesInvoices.Contracts
         public int Id { get; set; }
         public string ClientName { get; set; }
         public int ProductId { get; set; }
-        public int NumberOfProducts { get; set; }
+        public int Count { get; set; }
         public decimal TotalPrice { get; set; }
         public DateTime DateOfSale { get; set; }
     }

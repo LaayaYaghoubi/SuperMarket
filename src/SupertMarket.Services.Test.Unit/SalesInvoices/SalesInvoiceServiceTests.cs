@@ -43,7 +43,7 @@ namespace SupertMarket.Services.Test.Unit.SalesInvoices
 
             var expected = _dataContext.SalesInvoices.FirstOrDefault();
             expected.ClientName.Should().Be(dto.ClientName);
-            expected.NumberOfProducts.Should().Be(dto.NumberOfProducts);
+            expected.Count.Should().Be(dto.NumberOfProducts);
             expected.ProductId.Should().Be(dto.ProductId);
             expected.DateOfSale.Should().Be(dto.DateOfSale);
             expected.TotalPrice.Should().Be(dto.TotalPrice);
@@ -71,7 +71,7 @@ namespace SupertMarket.Services.Test.Unit.SalesInvoices
             var expected = _dataContext.SalesInvoices.
                FirstOrDefault(_ => _.Id == salesInvoice.Id);
             expected.ClientName.Should().Be(dto.ClientName);
-            expected.NumberOfProducts.Should().Be(dto.NumberOfProducts);
+            expected.Count.Should().Be(dto.NumberOfProducts);
             expected.ProductId.Should().Be(dto.ProductId);
             expected.DateOfSale.Should().Be(dto.DateOfSale);
             expected.TotalPrice.Should().Be(dto.TotalPrice);
@@ -112,7 +112,7 @@ namespace SupertMarket.Services.Test.Unit.SalesInvoices
             expected.Should().HaveCount(1);
             expected.Should().Contain(_ => _.ClientName == salesInvoice.ClientName);
             expected.Should().Contain(_ => _.ProductId == salesInvoice.ProductId);
-            expected.Should().Contain(_ => _.NumberOfProducts == salesInvoice.NumberOfProducts);
+            expected.Should().Contain(_ => _.Count == salesInvoice.Count);
             expected.Should().Contain(_ => _.TotalPrice == salesInvoice.TotalPrice);
             expected.Should().Contain(_ => _.DateOfSale == salesInvoice.DateOfSale);
         }
@@ -126,7 +126,7 @@ namespace SupertMarket.Services.Test.Unit.SalesInvoices
             _sut.Delete(salesInvoice.Id);
 
             _dataContext.SalesInvoices.Should().NotContain(_ => _.ClientName == salesInvoice.ClientName);
-            _dataContext.SalesInvoices.Should().NotContain(_ => _.NumberOfProducts == salesInvoice.NumberOfProducts);
+            _dataContext.SalesInvoices.Should().NotContain(_ => _.Count == salesInvoice.Count);
             _dataContext.SalesInvoices.Should().NotContain(_ => _.DateOfSale == salesInvoice.DateOfSale);
             _dataContext.SalesInvoices.Should().NotContain(_ => _.TotalPrice == salesInvoice.TotalPrice);
             _dataContext.SalesInvoices.Should().NotContain(_ => _.ProductId == salesInvoice.ProductId);
@@ -163,7 +163,7 @@ namespace SupertMarket.Services.Test.Unit.SalesInvoices
                 TotalPrice = 7000,
                 ClientName = "MrYaghoubi",
                 DateOfSale = DateTime.Now,
-                NumberOfProducts = 2,
+                Count = 2,
                 ProductId = product.Id,
             };
             _dataContext.Manipulate(_ => _.SalesInvoices.Add(salesInvoice));

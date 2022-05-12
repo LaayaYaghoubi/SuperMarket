@@ -23,7 +23,7 @@ namespace SuperMarket.Specs.Products
        IWantTo = " کالاها را مدیریت  کنم  ",
        InOrderTo = " کالاها را ویرایش کنم"
      )]
-    public class UpdateProductIdToDuplicateId : EFDataContextDatabaseFixture
+    public class UpdateProductCodeWithDuplicateCode : EFDataContextDatabaseFixture
     {
         private readonly EFDataContext _dataContext;
         private Category _category;
@@ -34,7 +34,7 @@ namespace SuperMarket.Specs.Products
         private ProductService _sut;
         private Action expected;
 
-        public UpdateProductIdToDuplicateId(ConfigurationFixture configuration)
+        public UpdateProductCodeWithDuplicateCode(ConfigurationFixture configuration)
             : base(configuration)
         {
             _dataContext = CreateDataContext();
@@ -46,12 +46,7 @@ namespace SuperMarket.Specs.Products
         [Given(": دسته بندی با عنوان ‘ لبنیات’ در  فهرست دسته بندی کالاها وجود دارد.")]
         public void Given()
         {
-            _category = new Category()
-            {
-                Name = "لبنیات"
-            };
-
-            _dataContext.Manipulate(_ => _.Categories.Add(_category));
+            AddACategory();
         }
         [And("کالا با عنوان ‘شیر’ " +
             "و قیمت ‘3500’ " +
@@ -63,17 +58,9 @@ namespace SuperMarket.Specs.Products
 
         public void And()
         {
-            _product = new Product()
-            {
-                Name = "شیر کاله",
-                Price = 3500,
-                CategoryId = _category.Id,
-                Id = 101,
-                MinimumStock = 1,
-                MaximumStock = 10
-            };
-            _dataContext.Manipulate(_ => _.Products.Add(_product));
+            AddAProduct();
         }
+
         [And("کالا با عنوان ‘ماست کاله’" +
             " و قیمت ‘5000’" +
             " و با دسته بندی ‘ لبنیات’ " +
@@ -83,16 +70,7 @@ namespace SuperMarket.Specs.Products
             " در فهرست کالاها وجود داشته باشد ")]
         public void AndGiven()
         {
-            var product = new Product()
-            {
-                Name = "ماست کاله",
-                Price = 5000,
-                CategoryId = _category.Id,
-                Id = 105,
-                MinimumStock = 1,
-                MaximumStock = 10
-            };
-            _dataContext.Manipulate(_ => _.Products.Add(product));
+            AddANewProduct();
         }
 
         [When("کالا با عنوان ‘شیر کاله’ " +
@@ -113,24 +91,16 @@ namespace SuperMarket.Specs.Products
 
         public void When()
         {
-            _dto = new UpdateProductDto()
-            {
-                Name = _product.Name,
-                Price = _product.Price,
-                CategoryId = _product.CategoryId,
-                Id = 105,
-                MinimumStock = _product.MinimumStock,
-                MaximumStock = _product.MaximumStock
+            ChangeProductCodeToDuplicateCode();
 
-            };
-           expected =()=> _sut.Update(_product.Id, _dto);
+            expected = () => _sut.Update(_product.Id, _dto);
         }
 
         [Then("تنها یک کالا با کد ‘105’ در فهرست کالاها باید وجود داشته باشد")]
 
         public void Then()
         {
-            _dataContext.Products.Where(_ => _.Id == _dto.Id).
+            _dataContext.Products.Where(_ => _.Code == _dto.Code).
                 Should().HaveCount(1);
 
         }
@@ -138,7 +108,7 @@ namespace SuperMarket.Specs.Products
         [And("خطایی با عنوان ‘ کد ویرایش شده تکراری است’ باید رخ دهد ")]
         public void AndThen()
         {
-            expected.Should().ThrowExactly<DuplicateProductIdException>();
+            expected.Should().ThrowExactly<DuplicateProductCodeException>();
         }
         [Fact]
         public void Run()
@@ -150,6 +120,56 @@ namespace SuperMarket.Specs.Products
                , _ => When()
                , _ => Then()
                , _ => AndThen());
+        }
+
+        private void AddACategory()
+        {
+            _category = new Category()
+            {
+                Name = "لبنیات"
+            };
+
+            _dataContext.Manipulate(_ => _.Categories.Add(_category));
+        }
+        private void AddAProduct()
+        {
+            _product = new Product()
+            {
+                Name = "شیر کاله",
+                Price = 3500,
+                CategoryId = _category.Id,
+                Code = 101,
+                MinimumStock = 1,
+                MaximumStock = 10
+            };
+            _dataContext.Manipulate(_ => _.Products.Add(_product));
+        }
+        private void AddANewProduct()
+        {
+            var product = new Product()
+            {
+                Name = "ماست کاله",
+                Price = 5000,
+                CategoryId = _category.Id,
+                Code = 105,
+                MinimumStock = 1,
+                MaximumStock = 10
+            };
+            _dataContext.Manipulate(_ => _.Products.Add(product));
+        }
+        private void ChangeProductCodeToDuplicateCode()
+        {
+            _dto = new UpdateProductDto()
+            {
+                Id = _product.Id,
+                Name = _product.Name,
+                Price = _product.Price,
+                CategoryId = _product.CategoryId,
+                Code = 105,
+                MinimumStock = _product.MinimumStock,
+                MaximumStock = _product.MaximumStock
+
+            };
         }
 
 

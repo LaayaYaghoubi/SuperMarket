@@ -45,12 +45,7 @@ namespace SuperMarket.Specs.PurchaseVouchers
         [Given(": دسته بندی با عنوان ‘ لبنیات’ در  فهرست دسته بندی کالاها وجود دارد.")]
         public void Given()
         {
-            _category = new Category()
-            {
-                Name = "لبنیات"
-            };
-
-            _dataContext.Manipulate(_ => _.Categories.Add(_category));
+            AddACategory();
         }
 
         [And("کالا با عنوان ‘شیرکاله’ " +
@@ -63,16 +58,7 @@ namespace SuperMarket.Specs.PurchaseVouchers
 
         public void And()
         {
-            _product = new Product()
-            {
-                Name = "شیر کاله",
-                Price = 3500,
-                CategoryId = _category.Id,
-                Id = 101,
-                MinimumStock = 1,
-                MaximumStock = 10
-            };
-            _dataContext.Manipulate(_ => _.Products.Add(_product));
+            AddAProduct();
         }
 
         [And("سند ورود کالا با عنوان سند ‘ خرید شیر کاله’" +
@@ -83,16 +69,7 @@ namespace SuperMarket.Specs.PurchaseVouchers
             " در فهرست سندهای ورود کالا وجود داشته باشد")]
         public void AndGiven()
         {
-            _purchaseVoucher = new PurchaseVoucher()
-            {
-                Name = "خرید شیر کاله",
-                DateOfPurchase = DateTime.Now,
-                ProductId = _product.Id,
-                NumberOfProducts = 10,
-                TotalPrice = 35000,
-                ExpirationDate = DateTime.Parse("2022-05-27T05:21:13.390Z")
-            };
-            _dataContext.Manipulate(_ => _.PurchaseVouchers.Add(_purchaseVoucher));
+            AddAPurchaseVoucher();
         }
 
         [When("درخواست مشاهده فهرست کالاها را می دهم")]
@@ -115,10 +92,10 @@ namespace SuperMarket.Specs.PurchaseVouchers
             expected.Should().Contain(_ => _.Name == _purchaseVoucher.Name);
             expected.Should().Contain(_ => _.Id == _purchaseVoucher.Id);
             expected.Should().Contain(_ => _.ProductId == _purchaseVoucher.ProductId);
-            expected.Should().Contain(_ => _.NumberOfProducts == _purchaseVoucher.NumberOfProducts);
+            expected.Should().Contain(_ => _.Count == _purchaseVoucher.Count);
             expected.Should().Contain(_ => _.TotalPrice == _purchaseVoucher.TotalPrice);
             expected.Should().Contain(_ => _.DateOfPurchase == _purchaseVoucher.DateOfPurchase);
-            expected.Should().Contain(_ => _.ExpirationDate == _purchaseVoucher.ExpirationDate);
+    
         }
 
         [Fact]
@@ -129,6 +106,42 @@ namespace SuperMarket.Specs.PurchaseVouchers
             AndGiven();
             When();
             Then();
+        }
+
+        private void AddACategory()
+        {
+            _category = new Category()
+            {
+                Name = "لبنیات"
+            };
+
+            _dataContext.Manipulate(_ => _.Categories.Add(_category));
+        }
+        private void AddAProduct()
+        {
+            _product = new Product()
+            {
+                Name = "شیر کاله",
+                Price = 3500,
+                CategoryId = _category.Id,
+                Code = 101,
+                MinimumStock = 1,
+                MaximumStock = 10
+            };
+            _dataContext.Manipulate(_ => _.Products.Add(_product));
+        }
+        private void AddAPurchaseVoucher()
+        {
+            _purchaseVoucher = new PurchaseVoucher()
+            {
+                Name = "خرید شیر کاله",
+                DateOfPurchase = DateTime.Now,
+                ProductId = _product.Id,
+                Count = 10,
+                TotalPrice = 35000,
+
+            };
+            _dataContext.Manipulate(_ => _.PurchaseVouchers.Add(_purchaseVoucher));
         }
     }
 }

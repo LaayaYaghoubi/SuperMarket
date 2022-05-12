@@ -44,7 +44,7 @@ namespace SupertMarket.Services.Test.Unit.Products
             expected.CategoryId.Should().Be(dto.CategoryId);
             expected.Name.Should().Be(dto.Name);
             expected.Price.Should().Be(dto.Price);
-            expected.Id.Should().Be(dto.Id);
+            expected.Code.Should().Be(dto.Code);
             expected.MinimumStock.Should().Be(dto.MinimumStock);
             expected.MaximumStock.Should().Be(dto.MaximumStock);
         }
@@ -57,7 +57,7 @@ namespace SupertMarket.Services.Test.Unit.Products
 
             Action expected = () => _sut.Add(newdto);
 
-            expected.Should().ThrowExactly<DuplicateProductIdException>();
+            expected.Should().ThrowExactly<DuplicateProductCodeException>();
         }
 
         [Fact]
@@ -69,7 +69,7 @@ namespace SupertMarket.Services.Test.Unit.Products
 
             expected.Should().HaveCount(1);
             expected.Should().Contain(_ => _.Name == product.Name);
-            expected.Should().Contain(_ => _.Id == product.Id);
+            expected.Should().Contain(_ => _.Code == product.Code);
             expected.Should().Contain(_ => _.CategoryId == product.CategoryId);
             expected.Should().Contain(_ => _.MinimumStock == product.MinimumStock);
             expected.Should().Contain(_ => _.MaximumStock == product.MaximumStock);
@@ -82,10 +82,10 @@ namespace SupertMarket.Services.Test.Unit.Products
 
             _sut.Update(product.Id, dto);
 
-            var expected = _dataContext.Products.FirstOrDefault(_ => _.Id == product.Id);
+            var expected = _dataContext.Products.FirstOrDefault(_ => _.Code == product.Code);
 
             expected.Name.Should().Be(dto.Name);
-            expected.Id.Should().Be(dto.Id);
+            expected.Code.Should().Be(dto.Code);
             expected.Price.Should().Be(dto.Price);
             expected.MinimumStock.Should().Be(dto.MinimumStock);
             expected.MaximumStock.Should().Be(dto.MaximumStock);
@@ -114,7 +114,7 @@ namespace SupertMarket.Services.Test.Unit.Products
 
             Action expected = () => _sut.Update(Secondproduct.Id, dto);
 
-            expected.Should().ThrowExactly<DuplicateProductIdException>();
+            expected.Should().ThrowExactly<DuplicateProductCodeException>();
         }
 
         private static UpdateProductDto ChangeSecondProductIdToProductId(Product product, Product Secondproduct)
@@ -124,7 +124,7 @@ namespace SupertMarket.Services.Test.Unit.Products
                 Name = Secondproduct.Name,
                 Price = 5000,
                 CategoryId = Secondproduct.CategoryId,
-                Id = product.Id,
+                Code = product.Code,
                 MinimumStock = Secondproduct.MinimumStock,
                 MaximumStock = Secondproduct.MaximumStock
             };
@@ -133,7 +133,7 @@ namespace SupertMarket.Services.Test.Unit.Products
         {
             var Secondproduct = new ProductBuilder().
                 WithName("KaleMilk").WithCategoryId(product.CategoryId).
-                WithId(109).CreateProduct();
+                WithCode(109).CreateProduct();
             _dataContext.Manipulate(_ => _.Products.Add(Secondproduct));
             return Secondproduct;
         }
@@ -144,7 +144,7 @@ namespace SupertMarket.Services.Test.Unit.Products
                 Name = product.Name,
                 Price = 5000,
                 CategoryId = product.CategoryId,
-                Id = product.Id,
+                Code = product.Code,
                 MinimumStock = product.MinimumStock,
                 MaximumStock = product.MaximumStock
             };
@@ -156,7 +156,7 @@ namespace SupertMarket.Services.Test.Unit.Products
                 Name = "butter",
                 Price = 3400,
                 CategoryId = product.CategoryId,
-                Id = product.Id,
+                Code = product.Code,
                 MinimumStock = product.MinimumStock,
                 MaximumStock = product.MaximumStock
             };
@@ -183,7 +183,7 @@ namespace SupertMarket.Services.Test.Unit.Products
                 Name = product.Name,
                 Price = product.Price,
                 CategoryId = product.CategoryId,
-                Id = product.Id,
+                Code = product.Code,
                 MinimumStock = product.MinimumStock,
                 MaximumStock = product.MaximumStock
             };

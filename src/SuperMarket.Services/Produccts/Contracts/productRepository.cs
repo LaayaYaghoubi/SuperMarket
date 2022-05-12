@@ -12,10 +12,10 @@ namespace SuperMarket.Services.Products.Contracts
     public interface ProductRepository : Repository
     {
         void Add(Product product);
-        bool IsExistProductId(int id);
+        bool IsExistProductCode(int id);
         Product FindById(int id);
         void Update(Product product);
         IList<GetAllProductsDto> GetAll();
-        bool IsExistProduct(int id);
+        Product FindByCode(int code);
     }
 }

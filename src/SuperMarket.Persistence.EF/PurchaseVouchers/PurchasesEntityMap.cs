@@ -24,7 +24,7 @@ namespace SuperMarket.Persistence.EF.PurchaseVouchers
                 .IsRequired();
             builder.Property(_ => _.ProductId)
                 .IsRequired();
-            builder.Property(_ => _.NumberOfProducts)
+            builder.Property(_ => _.Count)
                .IsRequired();
             builder.Property(_ => _.DateOfPurchase)
                .IsRequired();

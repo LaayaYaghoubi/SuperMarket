@@ -69,7 +69,7 @@ namespace SuperMarket.Specs.SalesInvoices
                 Name = "شیر کاله",
                 Price = 3500,
                 CategoryId = _category.Id,
-                Id = 101,
+                Code = 101,
                 MinimumStock = 1,
                 MaximumStock = 100,
                 Stock = 4
@@ -90,7 +90,7 @@ namespace SuperMarket.Specs.SalesInvoices
                 TotalPrice = 7000,
                 ClientName = "آقای چناری",
                 DateOfSale = DateTime.Now,
-                NumberOfProducts = 2,  
+                Count = 2,  
                 ProductId = _product.Id,
             };
             _dataContext.Manipulate(_ => _.SalesInvoices.Add(_salesInvoice));
@@ -116,7 +116,7 @@ namespace SuperMarket.Specs.SalesInvoices
             expected.Should().HaveCount(1);
             expected.Should().Contain(_ => _.ClientName == _salesInvoice.ClientName);
             expected.Should().Contain(_ => _.ProductId == _salesInvoice.ProductId);
-            expected.Should().Contain(_ => _.NumberOfProducts == _salesInvoice.NumberOfProducts);
+            expected.Should().Contain(_ => _.Count == _salesInvoice.Count);
             expected.Should().Contain(_ => _.TotalPrice == _salesInvoice.TotalPrice);
             expected.Should().Contain(_ => _.DateOfSale == _salesInvoice.DateOfSale);
 

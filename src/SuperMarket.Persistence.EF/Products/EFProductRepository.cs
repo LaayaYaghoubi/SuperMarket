@@ -22,6 +22,11 @@ namespace SuperMarket.Persistence.EF.Products
            _dataContext.Products.Add(product);  
         }
 
+        public Product FindByCode(int code)
+        {
+            return _dataContext.Products.Where(_ => _.Code == code).FirstOrDefault();
+        }
+
         public Product FindById(int id)
         {
             return _dataContext.Products.Find(id); 
@@ -32,6 +37,7 @@ namespace SuperMarket.Persistence.EF.Products
             return _dataContext.Products
                   .Select(_ => new GetAllProductsDto
                   {
+                      Code = _.Code,
                       Id = _.Id,
                       Name = _.Name,
                       Price = _.Price,  
@@ -41,14 +47,9 @@ namespace SuperMarket.Persistence.EF.Products
                   }).ToList();
         }
 
-        public bool IsExistProduct(int id)
+        public bool IsExistProductCode(int id)
         {
-            return _dataContext.Products.Any(_ => _.Id == id);
-        }
-
-        public bool IsExistProductId(int id)
-        {
-            return _dataContext.Products.Any(_ => _.Id == id); 
+            return  _dataContext.Products.Any(_ => _.Code == id) ;
         }
 
         public void Update(Product product)

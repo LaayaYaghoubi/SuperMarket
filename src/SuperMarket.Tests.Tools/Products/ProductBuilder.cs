@@ -14,7 +14,7 @@ namespace SuperMarket.Tests.Tools.Products
         {
             product = new Product()
             {
-                Id = 104,
+                Code = 104,
                 Name = "Milk",
                 Price = 3400,
                 CategoryId = category.Id,
@@ -22,9 +22,9 @@ namespace SuperMarket.Tests.Tools.Products
                 MinimumStock = 2,
             };
         }
-        public ProductBuilder WithId(int id)
+        public ProductBuilder WithCode(int code)
         {
-            product.Id = id;
+            product.Code = code;
             return this;
         }
         public ProductBuilder WithName(string name)
@@ -52,11 +52,7 @@ namespace SuperMarket.Tests.Tools.Products
             product.MaximumStock = maxstock;
             return this;
         }
-        public ProductBuilder WithExpirationDate(DateTime date)
-        {
-            product.ExpirationDate = date;
-            return this;
-        }
+      
         public ProductBuilder WithCategoryId(int categoryId)
         {
             product.CategoryId = categoryId;
@@ -74,9 +70,8 @@ namespace SuperMarket.Tests.Tools.Products
             {
                 Name = product.Name,
                 TotalPrice = totalPrice,
-                NumberOfProducts = numberOfProducts,
-                ExpirationDate = expirationDate,
-                ProductId = product.Id,
+                Count = numberOfProducts,
+                ProductId = product.Code,
                 DateOfPurchase = DateTime.Now
         };
             return this;
@@ -89,8 +84,8 @@ namespace SuperMarket.Tests.Tools.Products
             {
                 ClientName = clientName,
                 TotalPrice = totalPrice,
-                NumberOfProducts = numberOfProducts,
-                ProductId = product.Id,
+                Count = numberOfProducts,
+                ProductId = product.Code,
                 DateOfSale = DateTime.Now
             };
             return this;

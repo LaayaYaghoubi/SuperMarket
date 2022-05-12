@@ -27,13 +27,13 @@ namespace SuperMarket.Services.PurchaseVouchers
                 Name = dto.Name,
                 ProductId = dto.ProductId,  
                 DateOfPurchase = dto.DateOfPurchase,
-                NumberOfProducts = dto.NumberOfProducts,
+                Count = dto.Count,
                 TotalPrice = dto.TotalPrice,
-                ExpirationDate = dto.ExpirationDate,
+               
             };
             var product = _repository.FindProductById(dto.ProductId);
-            product.Stock = product.Stock + dto.NumberOfProducts;
-            product.ExpirationDate = dto.ExpirationDate;
+            product.Stock = product.Stock + dto.Count;
+          
 
             if (product.Stock >= product.MaximumStock)
             {
@@ -63,14 +63,14 @@ namespace SuperMarket.Services.PurchaseVouchers
          
             purchaseVoucher.Name = dto.Name;
             purchaseVoucher.TotalPrice = dto.TotalPrice;
-            purchaseVoucher.NumberOfProducts = dto.NumberOfProducts;    
+            purchaseVoucher.Count = dto.Count;    
             purchaseVoucher.ProductId = dto.ProductId;  
             purchaseVoucher.DateOfPurchase = dto.DateOfPurchase;
-            purchaseVoucher.ExpirationDate = dto.ExpirationDate;
+          
 
             var product = _repository.FindProductById(dto.ProductId);
-            product.Stock = product.Stock + dto.NumberOfProducts;
-            product.ExpirationDate = dto.ExpirationDate;
+            product.Stock = product.Stock + dto.Count;
+          
 
               if (product.Stock >= product.MaximumStock)
             {

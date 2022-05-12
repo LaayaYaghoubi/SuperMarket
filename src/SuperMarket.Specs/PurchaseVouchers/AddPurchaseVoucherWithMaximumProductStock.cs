@@ -46,12 +46,7 @@ namespace SuperMarket.Specs.PurchaseVouchers
 
         public void Given()
         {
-            _category = new Category()
-            {
-                Name = "لبنیات"
-            };
-
-            _dataContext.Manipulate(_ => _.Categories.Add(_category));
+            AddACategory();
         }
 
         [And("کالایی با با عنوان ‘شیرکاله’" +
@@ -65,18 +60,10 @@ namespace SuperMarket.Specs.PurchaseVouchers
 
         public void And()
         {
-            _product = new Product()
-            {
-                Name = "شیر کاله",
-                Price = 3500,
-                CategoryId = _category.Id,
-                Id = 101,
-                MinimumStock = 1,
-                MaximumStock = 100,
-                Stock = 4
-            };
-            _dataContext.Manipulate(_ => _.Products.Add(_product));
+            AddAProduct();
         }
+
+
         [And("هیچ سند ورود کالایی در فهرست سندهای ورود کالا وجود نداشته باشد.")]
 
         public void AndGiven()
@@ -93,16 +80,8 @@ namespace SuperMarket.Specs.PurchaseVouchers
 
         public void When()
         {
-            _dto = new AddPurchaseVoucherDto()
-            {
-                Name = "خرید شیر کاله",
-                DateOfPurchase = DateTime.Now,
-                ProductId = _product.Id,
-                NumberOfProducts = 100,
-                TotalPrice = 350000,
-                ExpirationDate = DateTime.Parse("2022-05-27T05:21:13.390Z")
-            };
-             expected =()=>  _sut.Add(_dto);
+            CreateAPurchaseVoucherWithMaxCount();
+            expected = () => _sut.Add(_dto);
         }
 
         [Then("کالا با با عنوان ‘شیرکاله’" +
@@ -119,7 +98,7 @@ namespace SuperMarket.Specs.PurchaseVouchers
             var expectedProduct = _dataContext.Products.
                   FirstOrDefault(_ => _.Id == _dto.ProductId);
             expectedProduct.Name.Should().Be(_product.Name);
-            expectedProduct.Id.Should().Be(_product.Id);
+            expectedProduct.Code.Should().Be(_product.Code);
             expectedProduct.CategoryId.Should().Be(_product.CategoryId);
             expectedProduct.MinimumStock.Should().Be(_product.MinimumStock);
             expectedProduct.MaximumStock.Should().Be(_product.MaximumStock);
@@ -144,6 +123,42 @@ namespace SuperMarket.Specs.PurchaseVouchers
                , _ => AndThen()
              
                );
+        }
+
+        private void AddACategory()
+        {
+            _category = new Category()
+            {
+                Name = "لبنیات"
+            };
+
+            _dataContext.Manipulate(_ => _.Categories.Add(_category));
+        }
+        private void AddAProduct()
+        {
+            _product = new Product()
+            {
+                Name = "شیر کاله",
+                Price = 3500,
+                CategoryId = _category.Id,
+                Code = 101,
+                MinimumStock = 1,
+                MaximumStock = 100,
+                Stock = 4
+            };
+            _dataContext.Manipulate(_ => _.Products.Add(_product));
+        }
+        private void CreateAPurchaseVoucherWithMaxCount()
+        {
+            _dto = new AddPurchaseVoucherDto()
+            {
+                Name = "خرید شیر کاله",
+                DateOfPurchase = DateTime.Now,
+                ProductId = _product.Id,
+                Count = 100,
+                TotalPrice = 350000,
+
+            };
         }
     }
 }

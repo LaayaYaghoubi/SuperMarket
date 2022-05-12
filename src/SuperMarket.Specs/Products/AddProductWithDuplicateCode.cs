@@ -23,7 +23,7 @@ namespace SuperMarket.Specs.Products
       IWantTo = " کالاها را مدیریت  کنم  ",
       InOrderTo = " کالاها را تعریف کنم"
     )]
-    public class AddProductWithDuplicateId : EFDataContextDatabaseFixture
+    public class AddProductWithDuplicateCode : EFDataContextDatabaseFixture
     {
         private readonly EFDataContext _dataContext;
         private Category _category;
@@ -34,7 +34,7 @@ namespace SuperMarket.Specs.Products
         private ProductService _sut;
         private Action expected;
 
-        public AddProductWithDuplicateId(ConfigurationFixture configuration) : base(configuration)
+        public AddProductWithDuplicateCode(ConfigurationFixture configuration) : base(configuration)
         {
             _dataContext = CreateDataContext();
             _unitOfWork = new EFUnitOfWork(_dataContext);
@@ -45,11 +45,7 @@ namespace SuperMarket.Specs.Products
         [Given(": دسته بندی با عنوان ‘ لبنیات’ در  فهرست دسته بندی کالاها وجود دارد")]
         public void Given()
         {
-            _category = new Category()
-            {
-                Name = "لبنیات"
-            };
-            _dataContext.Manipulate(_ => _.Categories.Add(_category));
+            AddACategory();
         }
 
         [And("کالا با عنوان ‘شیر کاله’ " +
@@ -62,16 +58,7 @@ namespace SuperMarket.Specs.Products
 
         public void And()
         {
-            _product = new Product()
-            {
-                Name = "شیر کاله",
-                Price = 3500,
-                CategoryId = _category.Id,
-                Id = 101,
-                MinimumStock = 1,
-                MaximumStock = 10
-            };
-            _dataContext.Manipulate(_ => _.Products.Add(_product)); 
+            AddAProduct();
         }
 
         [When("کالا با عنوان ‘ماست کاله’" +
@@ -83,29 +70,21 @@ namespace SuperMarket.Specs.Products
             "   تعریف می کنم")]
         public void When()
         {
-            _dto = new AddProductDto()
-            {
-                Name = "ماست کاله",
-                Price = 5000,
-                CategoryId = _category.Id,
-                Id = 101,
-                MinimumStock = 1,
-                MaximumStock = 10
-            };
-           expected =()=> _sut.Add(_dto);
+            CreateAProductWithDuplicateCode();
+            expected = () => _sut.Add(_dto);
         }
 
         [Then("تنها یک کالا با کد ‘101’ در فهرست کالاها باید وجود داشته باشد.")]
         public void Then()
         {
-            _dataContext.Products.Where(_ => _.Id == _dto.Id)
+            _dataContext.Products.Where(_ => _.Code == _dto.Code)
                 .Should().HaveCount(1);
         }
 
         [And("خطایی با عنوان ‘ کد کالا اضافه شده به فهرست کالاها تکراری است’ باید رخ دهد.")]
         public void ThenAnd()
         {
-            expected.Should().ThrowExactly<DuplicateProductIdException>();
+            expected.Should().ThrowExactly<DuplicateProductCodeException>();     
         }
 
         [Fact]
@@ -118,5 +97,41 @@ namespace SuperMarket.Specs.Products
               , _ => Then()
               , _ => ThenAnd());
         }
+
+        private void AddACategory()
+        {
+            _category = new Category()
+            {
+                Name = "لبنیات"
+            };
+            _dataContext.Manipulate(_ => _.Categories.Add(_category));
+        }
+        private void AddAProduct()
+        {
+            _product = new Product()
+            {
+                Name = "شیر کاله",
+                Price = 3500,
+                CategoryId = _category.Id,
+                Code = 101,
+                MinimumStock = 1,
+                MaximumStock = 10
+            };
+            _dataContext.Manipulate(_ => _.Products.Add(_product));
+        }
+        private void CreateAProductWithDuplicateCode()
+        {
+            _dto = new AddProductDto()
+            {
+                Name = "ماست کاله",
+                Price = 5000,
+                CategoryId = _category.Id,
+                Code = 101,
+                MinimumStock = 1,
+                MaximumStock = 10
+            };
+        }
+
+
     }
 }

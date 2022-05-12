@@ -11,7 +11,7 @@ namespace SuperMarket.Services.Produccts.Contracts
     public class AddProductDto
     {
         [Required]
-        public int Id { get; set; }
+        public int Code { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]

@@ -43,7 +43,7 @@ namespace SuperMarket.Persistence.EF.SalesInvoices
                 {
                     Id = _.Id,
                     ClientName = _.ClientName,  
-                    NumberOfProducts = _.NumberOfProducts,
+                    Count = _.Count,
                     DateOfSale = _.DateOfSale,
                     ProductId = _.ProductId,
                     TotalPrice = _.TotalPrice,  

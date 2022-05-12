@@ -3,11 +3,7 @@ using SuperMarket.Infrastructure.Application;
 using SuperMarket.Services.Produccts.Contracts;
 using SuperMarket.Services.Produccts.Exceptions;
 using SuperMarket.Services.Products.Contracts;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SuperMarket.Services.Produccts
 {
@@ -26,16 +22,16 @@ namespace SuperMarket.Services.Produccts
 
         public void Add(AddProductDto dto)
         {
-            var isIdDuplicate = _repository.IsExistProductId(dto.Id);
-            if (isIdDuplicate)
+            var isCodeDuplicate = _repository.IsExistProductCode(dto.Code);
+            if (isCodeDuplicate)
             {
-                throw new DuplicateProductIdException();
+                throw new DuplicateProductCodeException();
             }
             var product = new Product()
             {
                 Name = dto.Name,
                 Price = dto.Price,
-                Id = dto.Id,
+                Code = dto.Code,
                 MaximumStock = dto.MaximumStock,
                 MinimumStock = dto.MinimumStock,
                 CategoryId = dto.CategoryId,
@@ -52,16 +48,17 @@ namespace SuperMarket.Services.Produccts
         public void Update(int id, UpdateProductDto dto)
         {
             var product = _repository.FindById(id);
-            var isIdDuplicate = _repository.IsExistProductId(dto.Id);
+            var isCodeDuplicate = _repository.IsExistProductCode(dto.Code);
+            var DuplicatedCodeProduct = _repository.FindByCode(dto.Code);
             if (product == null)
             {
                 throw new ThereIsNoProductWithThisIdException();
             }
-            else if (isIdDuplicate && id != dto.Id)
+            else if (isCodeDuplicate && id != DuplicatedCodeProduct.Id)
             {
-                throw new DuplicateProductIdException();
+                throw new DuplicateProductCodeException();
             }
-                product.Id = dto.Id;
+                product.Code = dto.Code;
                 product.MaximumStock = dto.MaximumStock;
                 product.MinimumStock = dto.MinimumStock;
                 product.Name = dto.Name;

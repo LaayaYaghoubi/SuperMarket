@@ -26,7 +26,6 @@ namespace SuperMarket.Specs.Products
         private readonly EFDataContext _dataContext;
         private Product _product;
         private Category _category;
-        private GetAllProductsDto _dto;
         private UnitOfWork _unitOfWork;
         private ProductRepository _repository;
         private ProductService _sut;
@@ -43,12 +42,7 @@ namespace SuperMarket.Specs.Products
         [Given(": دسته بندی با عنوان ‘ لبنیات’ در  فهرست دسته بندی کالاها وجود دارد.")]
         public void Given()
         {
-            _category = new Category()
-            {
-                Name = "لبنیات"
-            };
-
-            _dataContext.Manipulate(_ => _.Categories.Add(_category));
+            AddACategory();
         }
 
         [And("کالا با عنوان ‘شیرکاله’ " +
@@ -61,16 +55,7 @@ namespace SuperMarket.Specs.Products
 
         public void And()
         {
-            _product = new Product()
-            {
-                Name = "شیر کاله",
-                Price = 3500,
-                CategoryId = _category.Id,
-                Id = 101,
-                MinimumStock = 1,
-                MaximumStock = 10
-            };
-            _dataContext.Manipulate(_ => _.Products.Add(_product)); 
+            AddAProduct();
         }
 
         [When("درخواست مشاهده فهرست کالاها را می دهم")]
@@ -93,6 +78,7 @@ namespace SuperMarket.Specs.Products
             expected.Should().HaveCount(1);
             expected.Should().Contain(_ => _.Name == _product.Name);
             expected.Should().Contain(_ => _.Id == _product.Id);
+            expected.Should().Contain(_ => _.Code == _product.Code);
             expected.Should().Contain(_ => _.CategoryId == _product.CategoryId);
             expected.Should().Contain(_ => _.MinimumStock == _product.MinimumStock);
             expected.Should().Contain(_ => _.MaximumStock == _product.MaximumStock);
@@ -106,6 +92,30 @@ namespace SuperMarket.Specs.Products
             When();
             Then();
         }
+
+        private void AddACategory()
+        {
+            _category = new Category()
+            {
+                Name = "لبنیات"
+            };
+
+            _dataContext.Manipulate(_ => _.Categories.Add(_category));
+        }
+        private void AddAProduct()
+        {
+            _product = new Product()
+            {
+                Name = "شیر کاله",
+                Price = 3500,
+                CategoryId = _category.Id,
+                Code = 101,
+                MinimumStock = 1,
+                MaximumStock = 10
+            };
+            _dataContext.Manipulate(_ => _.Products.Add(_product));
+        }
+
     }
 }
 

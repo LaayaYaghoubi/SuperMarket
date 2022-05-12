@@ -134,7 +134,7 @@ namespace SupertMarket.Services.Test.Unit.Categories
         {
             Product product = new Product()
             {
-                Id = 101,
+                Code = 101,
                 Name = "شیر کاله",
                 Price = 3500,
                 CategoryId = category.Id,

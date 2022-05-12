@@ -42,9 +42,8 @@ namespace SuperMarket.Persistence.EF.PurchaseVouchers
                      Name = _.Name,
                      ProductId = _.ProductId,
                      DateOfPurchase = _.DateOfPurchase,
-                     ExpirationDate = _.ExpirationDate,
                      TotalPrice = _.TotalPrice, 
-                     NumberOfProducts = _.NumberOfProducts,
+                     Count = _.Count,
                     
                  }).ToList();
         }

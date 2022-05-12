@@ -45,19 +45,13 @@ namespace SuperMarket.Specs.Categories
         [Given("دسته بندی با عنوان ‘لبنیات’ در فهرست دسته بندی کالا وجود داشته باشد.")]
         public void Given()
         {
-            _category = new Category()
-            {
-                Name = "لبنیات"
-            };
-            _dataContext.Manipulate(_ => _.Categories.Add(_category));
+            AddACategory();
         }
         [When("عنوان 'لبنیات' را به 'تنقلات' ویرایش میکنم")]
         public void When()
         {
-            _dto = new UpdateCategoryDto
-            {
-                Name = "تنقلات"
-            };
+            ChangeCreatedCategory();
+
             _sut.Update(_category.Id, _dto);
         }
         [Then("دسته بندی با عنوان ‘تنقلات ’در فهرست دسته بندی کالا باید وجود داشته باشد.")]
@@ -67,7 +61,6 @@ namespace SuperMarket.Specs.Categories
 
             expected.Name.Should().Be(_dto.Name);
         }
-
         [Fact]
         public void Run()
         {
@@ -76,6 +69,22 @@ namespace SuperMarket.Specs.Categories
             Then(); 
         }
 
-       
+        private void AddACategory()
+        {
+            _category = new Category()
+            {
+                Name = "لبنیات"
+            };
+            _dataContext.Manipulate(_ => _.Categories.Add(_category));
+        }
+        private void ChangeCreatedCategory()
+        {
+            _dto = new UpdateCategoryDto
+            {
+                Name = "تنقلات"
+            };
+        }
+
+
     }
 }

@@ -42,13 +42,8 @@ namespace SuperMarket.Specs.Categories
         [Given(": دسته بندی با عنوان 'لبنیات' در فهرست دسته بندی کالا وجود داشته باشد.")]
         public void Given()
         {
-            _category = new Category()
-            {
-                Name = "لبنیات"
-            };
-            _dataContext.Manipulate(_ => _.Categories.Add(_category));
+            AddACategory();
         }
-
         [And(":  کالایی با عنوان ‘شیر کاله’ " +
             "و قیمت ‘3500’ " +
             "و با عنوان دسته بندی ‘ لبنیات’" +
@@ -56,41 +51,25 @@ namespace SuperMarket.Specs.Categories
             " وحداقل موجودی ‘1’ " +
             "و حداکثر موجودی ‘10’ " +
             " در دسته بندی کالاها وجود داشته باشد.")]
-
         public void And()
         {
-            _product = new Product()
-            {
-                Id = 101,
-                Name = "شیر کاله",
-                Price = 3500,
-                CategoryId = _category.Id,
-                MinimumStock = 1,
-                MaximumStock = 10,
-            };
-
-            _dataContext.Manipulate(_ => _.Products.Add(_product));
+            AddAproduct();
         }
-
         [When("دسته بندی با عنوان ‘لبنیات’ در فهرست دسته بندی کالا را حذف می کنم")]
         public void When()
         {
             expected = () => _sut.Delete(_category.Id);
         }
-
         [Then("فهرست دسته بندی کالا با عنوان ‘لبنیات’ باید وجود داشته باشد.")]
         public void Then()
         {
             _dataContext.Categories.Should().Contain(_ => _.Name == _category.Name);
         }
-
         [And("خطایی با عنوان ‘ دسته بندی حاوی کالا است’ باید رخ دهد.")]
         public void AndThen()
         {
             expected.Should().ThrowExactly<CategoryContainProductException>();
         }
-
-
         [Fact]
         public void Run()
         {
@@ -101,6 +80,28 @@ namespace SuperMarket.Specs.Categories
                , _ => Then()
                , _ => AndThen()
                );
+        }
+        private void AddAproduct()
+        {
+            _product = new Product()
+            {
+                Code = 101,
+                Name = "شیر کاله",
+                Price = 3500,
+                CategoryId = _category.Id,
+                MinimumStock = 1,
+                MaximumStock = 10,
+            };
+
+            _dataContext.Manipulate(_ => _.Products.Add(_product));
+        }
+        private void AddACategory()
+        {
+            _category = new Category()
+            {
+                Name = "لبنیات"
+            };
+            _dataContext.Manipulate(_ => _.Categories.Add(_category));
         }
     }
 }

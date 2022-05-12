@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SuperMarket.Services.Produccts.Exceptions
 {
-    public class DuplicateProductIdException : Exception
+    public class DuplicateProductCodeException : Exception
     {
     }
 }

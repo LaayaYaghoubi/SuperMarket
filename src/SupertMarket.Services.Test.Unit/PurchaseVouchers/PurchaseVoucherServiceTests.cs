@@ -44,10 +44,10 @@ namespace SupertMarket.Services.Test.Unit.PurchaseVouchers
             expected.Name.Should().Be(dto.Name);
             expected.ProductId.Should().Be(dto.ProductId);
             expected.TotalPrice.Should().Be(dto.TotalPrice);
-            expected.NumberOfProducts.Should().Be(dto.NumberOfProducts);
+            expected.Count.Should().Be(dto.Count);
             expected.DateOfPurchase.Should().Be(dto.DateOfPurchase);
             expected.Product.Stock.Should().Be(product.Stock);
-            expected.Product.ExpirationDate.Should().Be(dto.ExpirationDate);
+           
         }
         [Fact]
         public void Add_throws_exception_ProductStockReachedMaximumStockException_if_sum_of_number_Of_PurchaseVoucher_Products_and_stock_products_becomes_greater_than_maximum_stock()
@@ -74,10 +74,9 @@ namespace SupertMarket.Services.Test.Unit.PurchaseVouchers
             expected.Should().Contain(_ => _.Name == purchaseVoucher.Name);
             expected.Should().Contain(_ => _.Id == purchaseVoucher.Id);
             expected.Should().Contain(_ => _.ProductId == purchaseVoucher.ProductId);
-            expected.Should().Contain(_ => _.NumberOfProducts == purchaseVoucher.NumberOfProducts);
+            expected.Should().Contain(_ => _.Count == purchaseVoucher.Count);
             expected.Should().Contain(_ => _.TotalPrice == purchaseVoucher.TotalPrice);
             expected.Should().Contain(_ => _.DateOfPurchase == purchaseVoucher.DateOfPurchase);
-            expected.Should().Contain(_ => _.ExpirationDate == purchaseVoucher.ExpirationDate);
         }
 
         [Fact]
@@ -96,9 +95,8 @@ namespace SupertMarket.Services.Test.Unit.PurchaseVouchers
             expected.Name.Should().Be(dto.Name);
             expected.ProductId.Should().Be(dto.ProductId);
             expected.DateOfPurchase.Should().Be(dto.DateOfPurchase);
-            expected.NumberOfProducts.Should().Be(dto.NumberOfProducts);
+            expected.Count.Should().Be(dto.Count);
             expected.TotalPrice.Should().Be(dto.TotalPrice);
-            expected.ExpirationDate.Should().Be(dto.ExpirationDate);
         }
         [Fact]
         public void Update_Throws_exception_ThereIsNoPurchaseVoucherWithThisIdException_if_selected_voucher_does_not_exist()
@@ -134,7 +132,7 @@ namespace SupertMarket.Services.Test.Unit.PurchaseVouchers
                 Name = purchaseVoucher.Name,
                 DateOfPurchase = purchaseVoucher.DateOfPurchase,
                 ProductId = purchaseVoucher.ProductId,
-                NumberOfProducts = 50,
+                Count = 50,
                 TotalPrice = 105000,
                 ExpirationDate = DateTime.Parse("2022-05-30T05:21:13.390Z")
             };
@@ -146,9 +144,9 @@ namespace SupertMarket.Services.Test.Unit.PurchaseVouchers
                 Name = purchaseVoucher.Name,
                 DateOfPurchase = purchaseVoucher.DateOfPurchase,
                 ProductId = purchaseVoucher.ProductId,
-                NumberOfProducts = 30,
+                Count = 30,
                 TotalPrice = 105000,
-                ExpirationDate = DateTime.Parse("2022-05-30T05:21:13.390Z")
+              
             };
         }
         private PurchaseVoucher CreateAndAddAPurchaseVoucher(Product product)
@@ -158,8 +156,7 @@ namespace SupertMarket.Services.Test.Unit.PurchaseVouchers
                 Name = product.Name,
                 ProductId = product.Id,
                 DateOfPurchase = DateTime.Now,
-                ExpirationDate = DateTime.Parse("2022-05-27T05:21:13.390Z"),
-                NumberOfProducts = 2,
+                Count = 2,
                 TotalPrice = 7000,
             };
             _dataContext.Manipulate(_ => _.PurchaseVouchers.Add(purchaseVoucher));
@@ -172,8 +169,7 @@ namespace SupertMarket.Services.Test.Unit.PurchaseVouchers
                 Name = product.Name,
                 ProductId = product.Id,
                 DateOfPurchase = DateTime.Now,
-                ExpirationDate = DateTime.Parse("2022-05-27T05:21:13.390Z"),
-                NumberOfProducts = 50,
+                Count = 50,
                 TotalPrice = 175000,
             };
         }
@@ -184,8 +180,7 @@ namespace SupertMarket.Services.Test.Unit.PurchaseVouchers
                 Name = product.Name,
                 ProductId = product.Id,
                 DateOfPurchase = DateTime.Now,
-                ExpirationDate = DateTime.Parse("2022-05-27T05:21:13.390Z"),
-                NumberOfProducts = 2,
+                Count = 2,
                 TotalPrice = 7000,
             };
         }

@@ -10,10 +10,7 @@ using SuperMarket.Services.Categories;
 using SuperMarket.Services.Categories.Contracts;
 using SuperMarket.Services.Categories.Exceptions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 using static BookStore.Specs.BDDHelper;
 
@@ -46,36 +43,25 @@ namespace SuperMarket.Specs.Categories
         [Given("دسته بندی با عنوان ‘لبنیات’ در فهرست دسته بندی کالا وجود داشته باشد.")]
         public void Given()
         {
-            _category = new Category()
-            {
-                Name = "لبنیات"
-            };
-            _dataContext.Manipulate(_ => _.Categories.Add(_category));
+            AddACategory();
         }
-
         [When("دسته بندی با عنوان ‘لبنیات’ تعریف می کنم ")]
         public void When()
         {
-            _dto = new AddCategoryDto()
-            {
-                Name = "لبنیات"
-            };
-          expected =()=>  _sut.Add(_dto);
+            CreateACategoryWithDuplicateName();
+            expected = () => _sut.Add(_dto);
         }
-
         [Then("تنها یک دسته بندی با عنوان’ لبنیات’ در فهرست دسته بندی کالا باید وجود داشته باشد.")]
         public void Then()
         {
             _dataContext.Categories.Where(_ => _.Name == _dto.Name)
                 .Should().HaveCount(1);
         }
-
         [And("خطایی با عنوان ‘عنوان دسته بندی کالا تکراری است’ باید رخ دهد.")]
         public void And()
         {
             expected.Should().ThrowExactly<DuplicateCategoryNameException>();
         }
-
         [Fact]
         public void Run()
         {
@@ -84,6 +70,21 @@ namespace SuperMarket.Specs.Categories
                , _ => When()
                , _ => Then()
                , _ => And());
+        } 
+        public void AddACategory()
+        {
+            _category = new Category()
+            {
+                Name = "لبنیات"
+            };
+            _dataContext.Manipulate(_ => _.Categories.Add(_category));
+        }
+        private void CreateACategoryWithDuplicateName()
+        {
+            _dto = new AddCategoryDto()
+            {
+                Name = "لبنیات"
+            };
         }
     }
 }

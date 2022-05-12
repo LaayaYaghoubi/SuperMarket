@@ -22,7 +22,7 @@ namespace SuperMarket.Specs.Categories
     IWantTo = " دسته بندی کالاها را مدیریت  کنم  ",
     InOrderTo = "دسته بندی های کالا را ویرایش کنم"
   )]
-    public class UpdateCategoryNameToDuplicateName : EFDataContextDatabaseFixture
+    public class UpdateCategoryNameWithDuplicateName : EFDataContextDatabaseFixture
     {
         private readonly EFDataContext _dataContext;
         private UpdateCategoryDto _dto;
@@ -32,7 +32,7 @@ namespace SuperMarket.Specs.Categories
         private Category _category;
         private Action expected;
         
-        public UpdateCategoryNameToDuplicateName(ConfigurationFixture configuration)
+        public UpdateCategoryNameWithDuplicateName(ConfigurationFixture configuration)
             : base(configuration)
         {
             _dataContext = CreateDataContext();
@@ -44,21 +44,15 @@ namespace SuperMarket.Specs.Categories
         [Given("دسته بندی با عنوان 'لبنیات' در فهرست دسته بندی کالا وجود داشته باشد.")]
         public void Given()
         {
-            _category = new Category()
-            {
-                Name = "لبنیات"
-            };
-            _dataContext.Manipulate(_ => _.Categories.Add(_category));
+            AddACategory();
         }
+
         [And("دسته بندی با عنوان 'تنقلات' در فهرست دسته بندی کالا وجود داشته باشد.")]
         public void And()
         {
-            var category = new Category()
-            {
-                Name = "تنقلات"
-            };
-            _dataContext.Manipulate(_ => _.Categories.Add(category));
+            AddANewCategory();
         }
+
         [When("عنوان 'لبنیات' را به 'تنقلات' ویرایش میکنم")]
         public void When()
         {
@@ -75,7 +69,6 @@ namespace SuperMarket.Specs.Categories
             _dataContext.Categories.Where(_ => _.Name == _dto.Name)
                 .Should().HaveCount(1);
         }
-
         [And("خطایی با عنوان 'عنوان جدید دسته بندی تکراری است' باید رخ دهد")]
         public void AndThen()
         {
@@ -91,6 +84,23 @@ namespace SuperMarket.Specs.Categories
                , _ => When()
                , _ => Then()
                , _ => AndThen());
+        }
+
+        private void AddACategory()
+        {
+            _category = new Category()
+            {
+                Name = "لبنیات"
+            };
+            _dataContext.Manipulate(_ => _.Categories.Add(_category));
+        }
+        private void AddANewCategory()
+        {
+            var category = new Category()
+            {
+                Name = "تنقلات"
+            };
+            _dataContext.Manipulate(_ => _.Categories.Add(category));
         }
     }
 }

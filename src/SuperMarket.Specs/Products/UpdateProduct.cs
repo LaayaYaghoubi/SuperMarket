@@ -44,13 +44,9 @@ namespace SuperMarket.Specs.Products
         [Given(": دسته بندی با عنوان ‘ لبنیات’ در  فهرست دسته بندی کالاها وجود دارد.")]
         public void Given()
         {
-            _category = new Category()
-            {
-                Name = "لبنیات"
-            };
-
-            _dataContext.Manipulate(_ => _.Categories.Add(_category));
+            AddACategory();
         }
+
         [And("کالا با عنوان ‘شیرکاله’ " +
             "و قیمت ‘3500’ " +
             "و با دسته بندی ‘ لبنیات’ " +
@@ -61,18 +57,8 @@ namespace SuperMarket.Specs.Products
 
         public void And()
         {
-            _product = new Product()
-            {
-                Name = "شیر کاله",
-                Price = 3500,
-                CategoryId = _category.Id,
-                Id = 101,
-                MinimumStock = 1,
-                MaximumStock = 10
-            };
-            _dataContext.Manipulate(_ => _.Products.Add(_product));
+            AddAProduct();
         }
-
         [When("کالا با عنوان ‘شیرکاله ‘ " +
             "و قیمت ‘3500’ " +
             "و با دسته بندی ‘ لبنیات’" +
@@ -90,18 +76,10 @@ namespace SuperMarket.Specs.Products
 
         public void When()
         {
-            _dto = new UpdateProductDto()
-            {
-                Name = _product.Name,   
-                Price = 5000,
-                CategoryId = _product.CategoryId,
-                Id = _product.Id,
-                MinimumStock = _product.MinimumStock,
-                MaximumStock = _product.MaximumStock
-
-            };
+             ChangeCreatedProduct();
             _sut.Update(_product.Id, _dto);
         }
+
 
         [Then("کالا با عنوان ‘ شیر سویا کاله ‘ " +
             "و قیمت ‘3500’" +
@@ -112,9 +90,8 @@ namespace SuperMarket.Specs.Products
         public void Then()
         {
             var expected = _dataContext.Products.FirstOrDefault(_ => _.Id == _product.Id);
-
             expected.Name.Should().Be(_dto.Name);
-            expected.Id.Should().Be(_dto.Id);
+            expected.Code.Should().Be(_dto.Code);
             expected.Price.Should().Be(_dto.Price);
             expected.MinimumStock.Should().Be(_dto.MinimumStock);
             expected.MaximumStock.Should().Be(_dto.MaximumStock);
@@ -129,7 +106,42 @@ namespace SuperMarket.Specs.Products
             When();
             Then();
         }
-           
+        private void AddACategory()
+        {
+            _category = new Category()
+            {
+                Name = "لبنیات"
+            };
+
+            _dataContext.Manipulate(_ => _.Categories.Add(_category));
+        }
+        private void AddAProduct()
+        {
+            _product = new Product()
+            {
+                Name = "شیر کاله",
+                Price = 3500,
+                CategoryId = _category.Id,
+                Code = 101,
+                MinimumStock = 1,
+                MaximumStock = 10
+            };
+            _dataContext.Manipulate(_ => _.Products.Add(_product));
+        }
+        private void ChangeCreatedProduct()
+        {
+            _dto = new UpdateProductDto()
+            {
+                Id = _product.Id,
+                Name = _product.Name,
+                Price = 5000,
+                CategoryId = _product.CategoryId,
+                Code = _product.Code,
+                MinimumStock = _product.MinimumStock,
+                MaximumStock = _product.MaximumStock
+
+            };
+        }
 
     }
-    }
+}

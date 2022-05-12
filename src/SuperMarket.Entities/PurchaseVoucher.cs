@@ -8,8 +8,7 @@ namespace SuperMarket.Entities
         public Product Product { get; set; }    
         public int ProductId { get; set; }
         public decimal TotalPrice { get; set; }
-        public int NumberOfProducts { get; set; }
+        public int Count { get; set; }
         public DateTime DateOfPurchase { get; set; }
-        public DateTime ExpirationDate { get; set; }
     }
 }
